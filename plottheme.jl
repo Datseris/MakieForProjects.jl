@@ -1,12 +1,19 @@
-# You can pick colorschemes from `colorschemes` folder
-COLORSCHEME = [
-    "#855BEC",
-    "#049A9A",
-    "#000000",
-    "#E60808",
-    "#465F00",
-    "#701B80",
-]
+########################################################################################
+# Colorscheme
+########################################################################################
+# You can pick colorschemes by setting the `ENV` variable `COLORSCHEME`
+COLORSCHEMES = Dict(
+    "JuliaDynamics" => [
+        "#7143E0",
+        "#0A9A84",
+        "#171A2F",
+        "#F30F0F",
+        "#465F00",
+        "#701B80",
+    ],
+)
+
+COLORSCHEME = COLORSCHEMES[get(ENV, "COLORSCHEME", "JuliaDynamics")]
 
 mutable struct CyclicContainer
     c::Vector
