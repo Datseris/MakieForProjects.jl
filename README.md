@@ -8,7 +8,7 @@ import Downloads
 
 try
     Downloads.download(
-        "https://github.com/Datseris/plottheme/blob/main/plottheme.jl/",
+        "https://raw.githubusercontent.com/Datseris/plottheme/main/plottheme.jl",
         joinpath(@__DIR__, "plottheme.jl")
     )
 end
