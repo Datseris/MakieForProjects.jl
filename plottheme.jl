@@ -63,8 +63,8 @@ default_theme = Makie.Theme(
     # cycle,
     ScatterLines = (cycle=cycle, markersize = 5),
     Scatter = (cycle=cycle,),
-    # Lines = (cycle=cycle,),
-    # Band = (cycle=:color,)
+    # Lines = (cycle=:color,), # default
+    # Band = (cycle=:color,),  # default
     Label = (textsize = _FONTSIZE + 4,)
 )
 
@@ -118,7 +118,7 @@ Text = Union{Symbol, <: AbstractString}
 Add a title to a `Figure`, that looks the same as the title of an `Axis`.
 """
 function figuretitle!(fig, title;
-        valign = :bottom, padding = (0, 0, 5, 0),
+        valign = :bottom, padding = (0, 0, 0, 0),
         font = "TeX Gyre Heros Bold", # same font as Axis titles
         kwargs...,
     )
