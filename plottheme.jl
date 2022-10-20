@@ -114,10 +114,27 @@ end
 Text = Union{Symbol, <: AbstractString}
 
 """
+    figuretitle!(fig, title; kwargs...)
+Add a title to a `Figure`, that looks the same as the title of an `Axis`.
+"""
+function figuretitle!(fig, title;
+        valign = :bottom, padding = (0, 0, 5, 0),
+        font = "TeX Gyre Heros Bold", # same font as Axis titles
+        kwargs...,
+    )
+    Label(fig[0, :], title;
+        tellheight = true, tellwidth = false, valign, padding, font, kwargs...
+    )
+    return
+end
+
+"""
     subplotgrid(m, n; sharex = false, sharey = false, kwargs...) -> fig, axs
 Create a grid of `m` rows and `n` columns axes in a new figure and return the figure and the
 matrix of axis. Optionally make every row share the y axis, and/or every column
 to share the x axis. In this case, tick labels are hidden from the shared axes.
+
+See also `subplotgrid!`.
 """
 function subplotgrid(m, n;
         sharex = false, sharey = false, titles = nothing,
@@ -157,12 +174,7 @@ function subplotgrid(m, n;
             axs[i, 1].ylabel = ylabels isa Text ? ylabels : ylabels[i]
         end
     end
-    if !isnothing(title)
-        Label(fig[0, :], title, valign = :bottom,
-            padding = (0, 0, 5, 0), tellheight = true, tellwidth = false,
-            font = "TeX Gyre Heros Bold", # same font as Axis titles
-        )
-    end
+    !isnothing(title) && figuretitle!(fig, title)
     return fig, axs
 end
 
