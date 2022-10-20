@@ -46,6 +46,7 @@ default_theme = Makie.Theme(
     Figure = (
         resolution = (1000, 600),
     ),
+    figure_padding = 4,
     linewidth = 3.0,
     # Font and size stuff:
     fontsize = _FONTSIZE,
