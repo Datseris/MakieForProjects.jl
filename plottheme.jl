@@ -5,11 +5,18 @@
 COLORSCHEMES = Dict(
     "JuliaDynamics" => [
         "#7143E0",
-        "#0A9A84",
         "#171A2F",
+        "#0A9A84",
         "#F30F0F",
         "#465F00",
         "#701B80",
+    ],
+    "Petrol" => [
+        "#00A9B5",
+        "#20254A",
+        "#86612A",
+        "#BD5DAA",
+        "#691105",
     ],
 )
 
@@ -46,7 +53,7 @@ default_theme = Makie.Theme(
     Figure = (
         resolution = (1000, 600),
     ),
-    figure_padding = 4,
+    figure_padding = 15,
     linewidth = 3.0,
     # Font and size stuff:
     fontsize = _FONTSIZE,
@@ -75,7 +82,7 @@ set_theme!(default_theme)
 # Testing style (colorscheme)
 if false
     using Random
-    fig = Figure(resolution = (1500, 1000)) # show colors
+    fig = Figure(resolution = (1200, 800)) # show colors
     display(fig)
     ax6 = Axis(fig[2,3])
     ax5 = Axis(fig[2,2])
@@ -94,7 +101,6 @@ if false
         end
         return "gray"*num
     end
-    L = length(COLORS)
     barpos = Random.shuffle(1:4L)
     for (i, c) in enumerate(COLORS)
         chsv = convert(Makie.Colors.HSV, to_color(c))
