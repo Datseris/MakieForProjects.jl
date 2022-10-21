@@ -101,7 +101,7 @@ if false
         lines!(ax1, [0, 1], [0, 0] .+ i; color = c, linewidth)
         lines!(ax2, [0, 1], [0, 0] .+ i; color = graycolor(chsv.v), linewidth)
         lines!(ax3, [0, 1], [0, 0] .+ i; color = graycolor(chsv.s), linewidth)
-        x = 0:0.05:5π
+        local x = 0:0.05:5π
         lines!(ax4, x, rand(1:3) .* cos.(x .+ i/2) .+ rand(length(x))/5; color=c, linewidth = 4)
         barplot!(ax5, barpos[collect(1:4) .+ (i-1)*4], 0.5rand(4) .+ 0.5; width = 1, gap=0.1,color=c)
         scatterlines!(ax6, rand(3), rand(3); linewidth = 4, markersize = 30)
