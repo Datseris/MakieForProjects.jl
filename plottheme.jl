@@ -60,19 +60,24 @@ default_theme = Makie.Theme(
     Axis = (
         xlabelsize = _LABELSIZE,
         ylabelsize = _LABELSIZE,
+        palette = (
+            color = COLORSCHEME,
+            marker = MARKERS,
+            patchcolor = COLORSCHEME,
+        ),
     ),
-    palette = (
-        color = COLORSCHEME,
-        marker = MARKERS,
-        patchcolor = COLORSCHEME,
+    Axis3 = (
+        palette = (
+            color = COLORSCHEME,
+            patchcolor = COLORSCHEME,
+        ),
     ),
     # This command makes the cycle of color and marker
     # co-vary at the same time in plots that use markers
-    # cycle,
     ScatterLines = (cycle=cycle, markersize = 5),
     Scatter = (cycle=cycle,),
-    # Lines = (cycle=:color,), # default
-    # Band = (cycle=:color,),  # default
+    Lines = (cycle=:color,),
+    Band = (cycle=:color,),
     Label = (textsize = _FONTSIZE + 4,)
 )
 
