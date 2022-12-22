@@ -6,7 +6,7 @@ To use this, make a Julia file with contents:
 using Makie # or GLMakie, CairoMakie, etc.
 import Downloads
 
-ENV["COLORCHEME"] = "JuliaDynamics" # or others, see repo.
+ENV["COLORCHEME"] = "JuliaDynamics" # or others, see `plottheme.jl`
 
 try
     Downloads.download(
