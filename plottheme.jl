@@ -21,6 +21,7 @@ COLORSCHEMES = Dict(
 )
 
 COLORSCHEME = COLORSCHEMES[get(ENV, "COLORSCHEME", "JuliaDynamics")]
+TEST_NEW_THEME = false # if true will produce a testing figure as a global var `fig`
 
 mutable struct CyclicContainer
     c::Vector
@@ -85,7 +86,7 @@ set_theme!(default_theme)
 
 
 # Testing style (colorscheme)
-if true
+if TEST_NEW_THEME
     using Random
     fig = Figure(resolution = (1200, 800)) # show colors
     display(fig)
