@@ -56,8 +56,8 @@ _LABELSIZE = 24
 default_theme = Makie.Theme(
     Figure = (
         resolution = (1000, 600),
+        figure_padding = 20,
     ),
-    figure_padding = 15,
     linewidth = 3.0,
     # Font and size stuff:
     fontsize = _FONTSIZE,
@@ -228,12 +228,18 @@ end
 
 
 """
-Add labels (a), (b), etc. to all axes.
+    label_axes!(axs::Array{Axis};
+        valign = :top, halign = :right, pad = 5, kwargs...
+    )
+
+Add labels (like a,b,c,...) to all axes.
+Keywords customly adjust location, and `kwargs` are propagated to `Label`.
 """
 function label_axes!(axs;
-        labels = 1:length(axs), transformation = identity,
+        labels = range('a'; step = 1, length = length(axs)),
+        transformation = x -> "("*string(x)*")",
         valign = :top, halign = :right,
-        pad = 5
+        pad = 5, kwargs...,
     )
 
     lbs = @. string(transformation(labels))
@@ -252,14 +258,20 @@ function label_axes!(axs;
 
     for (i, ax) in enumerate(axs)
         @assert ax isa Axis
-        x = ax.layoutobservables.gridcontent.parent[
-            ax.layoutobservables.gridcontent.span.rows,
-            ax.layoutobservables.gridcontent.span.cols
-        ]
+        gc = ax.layoutobservables.gridcontent[]
+        x = gc.parent[gc.span.rows, gc.span.cols]
+        # Currently `Label` has no way of having a box around it
         Label(x, lbs[i];
             tellwidth=false, tellheight=false,
-            valign, halign, padding,
+            valign, halign, padding, font = :bold, kwargs...
         )
+        # So we make a legend without any legend entries, just text
+        # (but actually, this doesn't work _at all_)
+        # Legend(x, Makie.LegendEntry[], String[], "test";
+        #     titlefont = :regular, titlegap = 0,
+        #     titlevalign = valign, titlehalign = halign,
+        #     tellwidth=false, tellheight=false,
+        # )
     end
     return
 end
