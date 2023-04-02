@@ -7,9 +7,9 @@ COLORSCHEMES = Dict(
         "#7143E0",
         "#191E44",
         "#0A9A84",
-        "#C0A12B",
-        "#701B80",
-        "#2E6137",
+        "#AF9327",
+        "#5F166D",
+        "#6C768C",
     ],
     "Petrol" => [
         "#00A9B5",
@@ -21,7 +21,8 @@ COLORSCHEMES = Dict(
 )
 
 COLORSCHEME = COLORSCHEMES[get(ENV, "COLORSCHEME", "JuliaDynamics")]
-TEST_NEW_THEME = false # if true will produce a testing figure as a global var `fig`
+# ENV["TEST_NEW_THEME"] = true
+TEST_NEW_THEME = get(ENV, "TEST_NEW_THEME", "false") == "true"
 
 mutable struct CyclicContainer
     c::Vector
@@ -32,6 +33,8 @@ CyclicContainer(c) = CyclicContainer(c, 0)
 Base.length(c::CyclicContainer) = length(c.c)
 Base.iterate(c::CyclicContainer, state=1) = Base.iterate(c.c, state)
 Base.getindex(c::CyclicContainer, i) = c.c[mod1(i, length(c))]
+Base.getindex(c::CyclicContainer, i::AbstractRange) = c.c[i]
+
 function Base.getindex(c::CyclicContainer)
     c.n += 1
     c[c.n]
@@ -89,7 +92,6 @@ set_theme!(default_theme)
 if TEST_NEW_THEME
     using Random
     fig = Figure(resolution = (1200, 800)) # show colors
-    display(fig)
     ax6 = Axis(fig[2,3])
     ax5 = Axis(fig[2,2])
     ax4 = Axis(fig[2,1])
@@ -118,6 +120,7 @@ if TEST_NEW_THEME
         barplot!(ax5, barpos[collect(1:4) .+ (i-1)*4], 0.5rand(4) .+ 0.5; width = 1, gap=0,color=c)
         scatterlines!(ax6, rand(3), rand(3); linewidth = 4, markersize = 30, color=c)
     end
+    display(fig)
 end
 
 
