@@ -145,18 +145,31 @@ function figuretitle!(fig, title;
 end
 
 """
-    subplotgrid(m, n; sharex = false, sharey = false, kwargs...) -> fig, axs
-Create a grid of `m` rows and `n` columns axes in a new figure and return the figure and the
-matrix of axis. Optionally make every row share the y axis, and/or every column
+    subplotgrid(m, n; kwargs...) -> fig, axs
+
+Create a grid of `m` rows and `n` columns of axes in a new figure and return the figure and
+the `Matrix` of axis. Optionally make every row share the y axis, and/or every column
 to share the x axis. In this case, tick labels are hidden from the shared axes.
 
-See also `subplotgrid!`.
+## Keyword arguments
+
+- `sharex/sharey = false`: make every row share the y axis and/or every row column
+  share the x axis. In this case, tick labels are hidden from the shared axes.
+- `titles::Vector{String}`: if given, they are used as titles
+  for the axes of the top row.
+- `xlabels::Vector{String}`: if given, they are used as x labels of the axes
+  in the bottom row
+- `ylabels::Vector{String}`: if given, they are used as y labels of the axes in the
+  leftmost column
+- `title::String`: if given, it is used as super-title for the entire figure
+  using the `figuretitle!` function.
+- `kwargs...`: all further keywords are propagated to `Figure`.
 """
 function subplotgrid(m, n;
         sharex = false, sharey = false, titles = nothing,
         xlabels = nothing, ylabels = nothing, title = nothing, kwargs...
     )
-    fig = Makie.Figure(;kwargs...)
+    fig = Makie.Figure(; kwargs...)
     axs = Matrix{Axis}(undef, m, n)
     for i in 1:m
         for j in 1:n
