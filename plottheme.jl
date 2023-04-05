@@ -131,7 +131,9 @@ Text = Union{Symbol, <: AbstractString}
 
 """
     figuretitle!(fig, title; kwargs...)
-Add a title to a `Figure`, that looks the same as the title of an `Axis`.
+
+Add a title to a `Figure`, that looks the same as the title of an `Axis`
+by using the same default font. `kwargs` are propagated to `Label`.
 """
 function figuretitle!(fig, title;
         valign = :bottom, padding = (0, 0, 0, 0),
@@ -147,9 +149,8 @@ end
 """
     subplotgrid(m, n; kwargs...) -> fig, axs
 
-Create a grid of `m` rows and `n` columns of axes in a new figure and return the figure and
-the `Matrix` of axis. Optionally make every row share the y axis, and/or every column
-to share the x axis. In this case, tick labels are hidden from the shared axes.
+Create a grid of `m` rows and `n` columns of axes in a new figure
+and return the figure and the `Matrix` of axis.
 
 ## Keyword arguments
 
