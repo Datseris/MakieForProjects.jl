@@ -156,12 +156,12 @@ and return the figure and the `Matrix` of axis.
 
 - `sharex/sharey = false`: make every row share the y axis and/or every row column
   share the x axis. In this case, tick labels are hidden from the shared axes.
-- `titles::Vector{String}`: if given, they are used as titles
-  for the axes of the top row.
+- `titles::Vector{String}`: if given, they are used as titles for the axes of the top row.
+  Can also be a single `String`, in which case it is used for all axes.
 - `xlabels::Vector{String}`: if given, they are used as x labels of the axes
-  in the bottom row
+  in the bottom row. Can also be a single `String`, in which case it is used for all axes.
 - `ylabels::Vector{String}`: if given, they are used as y labels of the axes in the
-  leftmost column
+  leftmost column. Can also be a single `String`, in which case it is used for all axes.
 - `title::String`: if given, it is used as super-title for the entire figure
   using the `figuretitle!` function.
 - `kwargs...`: all further keywords are propagated to `Figure`.
@@ -191,7 +191,7 @@ function subplotgrid(m, n;
     end
     if !isnothing(titles)
         for j in 1:n
-            axs[1, j].title = titles[j]
+            axs[1, j].title = titles isa Text ? titles : titles[j]
         end
     end
     if !isnothing(xlabels)
