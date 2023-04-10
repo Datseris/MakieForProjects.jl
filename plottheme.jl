@@ -185,7 +185,7 @@ function subplotgrid(m, n;
     end
     if sharey
         for i in 1:m # iterate through rows
-            Makie.linkyaxes!(axs[i,:])
+            Makie.linkyaxes!(axs[i,:]...)
             for j in 2:n; Makie.hideydecorations!(axs[i,j]; grid = false); end
         end
     end
