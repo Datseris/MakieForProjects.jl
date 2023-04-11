@@ -53,23 +53,24 @@ COLORS = CyclicContainer(COLORSCHEME)
 MARKERS = [:circle, :dtriangle, :rect, :pentagon, :xcross, :diamond]
 LINESTYLES = [:solid, :dash, :dot, :dashdot, :dashdotdot, [0.2, 4.5, 6.0, 8.5]]
 cycle = Cycle([:color, :marker], covary = true)
-colorcycle = Cycle([:color, :marker], covary = true)
 _FONTSIZE = 18
 _LABELSIZE = 24
 
 
 default_theme = Makie.Theme(
+    # Main theme (colors, markers, etc.)
     palette = (
         color = COLORSCHEME,
         marker = MARKERS,
+        linestyle = LINESTYLES,
         patchcolor = COLORSCHEME,
     ),
+    linewidth = 3.0,
+    # Sizes of figure and font
     Figure = (
         resolution = (1000, 600),
         figure_padding = 20,
     ),
-    linewidth = 3.0,
-    # Font and size stuff:
     fontsize = _FONTSIZE,
     Axis = (
         xlabelsize = _LABELSIZE,
@@ -81,10 +82,9 @@ default_theme = Makie.Theme(
     ),
     # This command makes the cycle of color and marker
     # co-vary at the same time in plots that use markers
-    ScatterLines = (cycle=cycle, markersize = 5),
-    Scatter = (cycle=cycle,),
-    Lines = (cycle=:color,),
-    Band = (cycle=:color,),
+    ScatterLines = (cycle = cycle, markersize = 15),
+    Scatter = (cycle = cycle,),
+    Band = (cycle = :color,),
     Label = (textsize = _FONTSIZE + 4,)
 )
 
@@ -301,6 +301,7 @@ called for horizontal legends that should span the full width of a column
 and hence are placed either on top or below an axis.
 """
 function space_out_legend!(legend)
+    Makie.update_state_before_display!(legend.parent)
     # ensure that the width and height are told correctly
     legend.tellwidth[] = false
     legend.tellheight[] = true
@@ -309,6 +310,5 @@ function space_out_legend!(legend)
     w_used = legend.layoutobservables.computedbbox[].widths[1]
     difference = w_available - w_used
     legend.colgap[] += difference / (legend.nbanks[] - 1)
-    Makie.update_state_before_display!(legend.parent)
     return
 end
