@@ -1,4 +1,6 @@
 export COLORSCHEME, COLORS, MARKERS, LINESTYLES
+export figuretitle!, axesgrid, subplotgrid
+export label_axes!, space_out_legend!
 
 ########################################################################################
 # Colorscheme
@@ -153,7 +155,7 @@ function figuretitle!(fig, title;
 end
 
 """
-    subplotgrid(m, n; kwargs...) -> fig, axs
+    axesgrid(m, n; kwargs...) -> fig, axs
 
 Create a grid of `m` rows and `n` columns of axes in a new figure
 and return the figure and the `Matrix` of axis.
@@ -172,7 +174,7 @@ and return the figure and the `Matrix` of axis.
   using the `figuretitle!` function.
 - `kwargs...`: all further keywords are propagated to `Figure`.
 """
-function subplotgrid(m, n;
+function axesgrid(m, n;
         sharex = false, sharey = false, titles = nothing,
         xlabels = nothing, ylabels = nothing, title = nothing, kwargs...
     )
@@ -213,6 +215,7 @@ function subplotgrid(m, n;
     !isnothing(title) && figuretitle!(fig, title)
     return fig, axs
 end
+const subplotgrid = axesgrid
 
 if isdefined(Main, :DrWatson)
     # Extension of DrWatson's save functionality for default CairoMakie saving
