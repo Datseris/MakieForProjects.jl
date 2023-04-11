@@ -1,3 +1,5 @@
+export COLORSCHEME, COLORS, MARKERS, LINESTYLES
+
 ########################################################################################
 # Colorscheme
 ########################################################################################
@@ -47,6 +49,7 @@ COLORS = CyclicContainer(COLORSCHEME)
 ########################################################################################
 # The rest require `Makie` accessible in global scope
 MARKERS = [:circle, :dtriangle, :rect, :pentagon, :xcross, :diamond]
+LINESTYLES = [:solid, :dash, :dot, :dashdot, :dashdotdot, [0.2, 4.5, 6.0, 8.5]]
 cycle = Cycle([:color, :marker], covary = true)
 colorcycle = Cycle([:color, :marker], covary = true)
 _FONTSIZE = 18
@@ -75,6 +78,9 @@ default_theme = Makie.Theme(
             color = COLORSCHEME,
             patchcolor = COLORSCHEME,
         ),
+    ),
+    Legend = (
+        patchsize = (40f0,20),
     ),
     # This command makes the cycle of color and marker
     # co-vary at the same time in plots that use markers
@@ -154,7 +160,7 @@ and return the figure and the `Matrix` of axis.
 
 ## Keyword arguments
 
-- `sharex/sharey = false`: make every row share the y axis and/or every row column
+- `sharex/sharey = false`: make every row share the y axis and/or every column
   share the x axis. In this case, tick labels are hidden from the shared axes.
 - `titles::Vector{String}`: if given, they are used as titles for the axes of the top row.
   Can also be a single `String`, in which case it is used for all axes.
@@ -275,17 +281,35 @@ function label_axes!(axs;
         gc = ax.layoutobservables.gridcontent[]
         x = gc.parent[gc.span.rows, gc.span.cols]
         # Currently `Label` has no way of having a box around it
-        Label(x, lbs[i];
+        lab = Label(x, lbs[i];
             tellwidth=false, tellheight=false,
             valign, halign, padding, font = :bold, kwargs...
         )
-        # So we make a legend without any legend entries, just text
-        # (but actually, this doesn't work _at all_)
-        # Legend(x, Makie.LegendEntry[], String[], "test";
-        #     titlefont = :regular, titlegap = 0,
-        #     titlevalign = valign, titlehalign = halign,
-        #     tellwidth=false, tellheight=false,
-        # )
+        # but we can access the internals and get the box of the label,
+        # and then make an actual box around it
+        # bx = Box(first(axs).parent; bbox = lab.layoutobservables.computedbbox)
+        # Makie.translate!(bx, 0, 0, -10)
     end
+    return
+end
+
+"""
+    space_out_legend!(legend)
+
+Space out the contents of a given legend, so that the banks are spaced equidistantly
+and cover the full width available for the legend. This function is supposed to be
+called for horizontal legends that should span the full width of a column
+and hence are placed either on top or below an axis.
+"""
+function space_out_legend!(legend)
+    # ensure that the width and height are told correctly
+    legend.tellwidth[] = false
+    legend.tellheight[] = true
+    # update axis limits etc, the legend adjustment must come last
+    w_available = legend.layoutobservables.suggestedbbox[].widths[1]
+    w_used = legend.layoutobservables.computedbbox[].widths[1]
+    difference = w_available - w_used
+    legend.colgap[] += difference / (legend.nbanks[] - 1)
+    Makie.update_state_before_display!(legend.parent)
     return
 end
