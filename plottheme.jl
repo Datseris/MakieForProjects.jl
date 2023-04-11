@@ -50,7 +50,7 @@ COLORS = CyclicContainer(COLORSCHEME)
 # Set Makie theme
 ########################################################################################
 # The rest require `Makie` accessible in global scope
-MARKERS = [:circle, :dtriangle, :rect, :pentagon, :xcross, :diamond]
+MARKERS = [:circle, :dtriangle, :rect, :star5, :xcross, :diamond]
 LINESTYLES = [:solid, :dash, :dot, :dashdot, [0.0, 4.0, 6.0, 9.5]]
 cycle = Cycle([:color, :marker], covary = true)
 _FONTSIZE = 18
