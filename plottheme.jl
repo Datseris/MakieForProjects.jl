@@ -135,7 +135,7 @@ end
 ########################################################################################
 # Convenience functions
 ########################################################################################
-Text = Union{Symbol, <: AbstractString}
+MakieText = Union{Symbol, <: AbstractString}
 
 """
     figuretitle!(fig, title; kwargs...)
@@ -199,17 +199,17 @@ function axesgrid(m, n;
     end
     if !isnothing(titles)
         for j in 1:n
-            axs[1, j].title = titles isa Text ? titles : titles[j]
+            axs[1, j].title = titles isa MakieText ? titles : titles[j]
         end
     end
     if !isnothing(xlabels)
         for j in 1:n
-            axs[end, j].xlabel = xlabels isa Text ? xlabels : xlabels[j]
+            axs[end, j].xlabel = xlabels isa MakieText ? xlabels : xlabels[j]
         end
     end
     if !isnothing(ylabels)
         for i in 1:m
-            axs[i, 1].ylabel = ylabels isa Text ? ylabels : ylabels[i]
+            axs[i, 1].ylabel = ylabels isa MakieText ? ylabels : ylabels[i]
         end
     end
     !isnothing(title) && figuretitle!(fig, title)
