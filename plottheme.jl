@@ -22,9 +22,17 @@ COLORSCHEMES = Dict(
         "#BD5DAA",
         "#691105",
     ],
+    "Flames" => [
+        "#84150F",
+        "#D65A35",
+        "#E2B830",
+        "#36454F",
+        "#B2BEB5",
+        "#9C278C",
+    ]
 )
 
-COLORSCHEME = COLORSCHEMES[get(ENV, "COLORSCHEME", "JuliaDynamics")]
+COLORSCHEME = COLORSCHEMES[get(ENV, "COLORSCHEME", "Flames")]
 # ENV["TEST_NEW_THEME"] = true
 TEST_NEW_THEME = get(ENV, "TEST_NEW_THEME", "false") == "true"
 
@@ -104,17 +112,13 @@ if TEST_NEW_THEME
     linewidth = 60
     L = length(COLORSCHEME)
     function graycolor(s)
-        x = string(s)
-        if length(x) == 3
-            num = x[3]
-        else
-            num = x[3:4]
-        end
-        return "gray"*num
+        x = round(Int, 100s)
+        return "gray"*string(x)
     end
     barpos = Random.shuffle(1:4L)
     for (i, c) in enumerate(COLORS)
         chsv = convert(Makie.Colors.HSV, to_color(c))
+        @show chsv.v
         lines!(ax1, [0, 1], [0, 0] .+ i; color = c, linewidth)
         lines!(ax2, [0, 1], [0, 0] .+ i; color = graycolor(chsv.v), linewidth)
         lines!(ax3, [0, 1], [0, 0] .+ i; color = graycolor(chsv.s), linewidth)
