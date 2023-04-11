@@ -59,6 +59,11 @@ _LABELSIZE = 24
 
 
 default_theme = Makie.Theme(
+    palette = (
+        color = COLORSCHEME,
+        marker = MARKERS,
+        patchcolor = COLORSCHEME,
+    ),
     Figure = (
         resolution = (1000, 600),
         figure_padding = 20,
@@ -69,20 +74,10 @@ default_theme = Makie.Theme(
     Axis = (
         xlabelsize = _LABELSIZE,
         ylabelsize = _LABELSIZE,
-        palette = (
-            color = COLORSCHEME,
-            marker = MARKERS,
-            patchcolor = COLORSCHEME,
-        ),
-    ),
-    Axis3 = (
-        palette = (
-            color = COLORSCHEME,
-            patchcolor = COLORSCHEME,
-        ),
+
     ),
     Legend = (
-        patchsize = (40f0,20),
+        patchsize = (40f0, 20),
     ),
     # This command makes the cycle of color and marker
     # co-vary at the same time in plots that use markers
@@ -286,12 +281,13 @@ function label_axes!(axs;
         # Currently `Label` has no way of having a box around it
         lab = Label(x, lbs[i];
             tellwidth=false, tellheight=false,
-            valign, halign, padding, font = :bold, kwargs...
+            valign, halign, padding, font = :bold, justification = :center,
+            kwargs...
         )
         # but we can access the internals and get the box of the label,
         # and then make an actual box around it
-        # bx = Box(first(axs).parent; bbox = lab.layoutobservables.computedbbox)
-        # Makie.translate!(bx, 0, 0, -10)
+        bx = Box(first(axs).parent; bbox = lab.layoutobservables.computedbbox, color = "gray")
+        Makie.translate!(bx.blockscene, 0, 0, -1)
     end
     return
 end
