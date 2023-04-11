@@ -82,8 +82,8 @@ default_theme = Makie.Theme(
     ),
     # This command makes the cycle of color and marker
     # co-vary at the same time in plots that use markers
-    ScatterLines = (cycle = cycle, markersize = 15),
-    Scatter = (cycle = cycle,),
+    ScatterLines = (cycle = cycle, markersize = 5),
+    Scatter = (cycle = cycle, markersize = 15),
     Band = (cycle = :color,),
     Label = (textsize = _FONTSIZE + 4,)
 )
