@@ -32,7 +32,7 @@ COLORSCHEMES = Dict(
     ]
 )
 
-COLORSCHEME = COLORSCHEMES[get(ENV, "COLORSCHEME", "Flames")]
+COLORSCHEME = COLORSCHEMES[get(ENV, "COLORSCHEME", "JuliaDynamics")]
 # ENV["TEST_NEW_THEME"] = true
 TEST_NEW_THEME = get(ENV, "TEST_NEW_THEME", "false") == "true"
 
