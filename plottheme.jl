@@ -83,7 +83,7 @@ default_theme = Makie.Theme(
     Axis = (
         xlabelsize = _LABELSIZE,
         ylabelsize = _LABELSIZE,
-
+        titlesize = _LABELSIZE,
     ),
     Legend = (
         patchsize = (40f0, 20),
@@ -93,7 +93,7 @@ default_theme = Makie.Theme(
     ScatterLines = (cycle = cycle, markersize = 5),
     Scatter = (cycle = cycle, markersize = 15),
     Band = (cycle = :color,),
-    Label = (textsize = _FONTSIZE + 4,)
+    Label = (textsize = _LABELSIZE,)
 )
 
 set_theme!(default_theme)
