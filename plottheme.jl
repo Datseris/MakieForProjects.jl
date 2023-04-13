@@ -30,7 +30,16 @@ COLORSCHEMES = Dict(
         "#36454F",
         "#B2BEB5",
         "#9C278C",
-    ]
+    ],
+    "GreenMetal" => [
+        "#478C5C",
+        "#184B29",
+        "#2B1E1E", # darkest
+        "#8A9EA0",
+        "#224269",
+        "#A2CD88", # lightest
+    ],
+
 )
 
 COLORSCHEME = COLORSCHEMES[get(ENV, "COLORSCHEME", "JuliaDynamics")]
