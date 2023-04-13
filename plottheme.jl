@@ -16,11 +16,12 @@ COLORSCHEMES = Dict(
         "#6C768C",
     ],
     "Petrol" => [
-        "#00A9B5",
-        "#20254A",
-        "#86612A",
+        "#006269",
         "#BD5DAA",
+        "#171B37",
+        "#86612A",
         "#691105",
+        "#00A9B5",
     ],
     "Flames" => [
         "#84150F",
@@ -118,7 +119,6 @@ if TEST_NEW_THEME
     barpos = Random.shuffle(1:4L)
     for (i, c) in enumerate(COLORS)
         chsv = convert(Makie.Colors.HSV, to_color(c))
-        @show chsv.v
         lines!(ax1, [0, 1], [0, 0] .+ i; color = c, linewidth)
         lines!(ax2, [0, 1], [0, 0] .+ i; color = graycolor(chsv.v), linewidth)
         lines!(ax3, [0, 1], [0, 0] .+ i; color = graycolor(chsv.s), linewidth)
