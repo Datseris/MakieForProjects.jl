@@ -69,7 +69,9 @@ COLORS = CyclicContainer(COLORSCHEME)
 ########################################################################################
 # The rest require `Makie` accessible in global scope
 MARKERS = [:circle, :dtriangle, :rect, :star5, :xcross, :diamond]
-LINESTYLES = [:solid, :dash, :dot, :dashdot, [0.0, 4.0, 6.0, 9.5]]
+# Linestyles implement a better dash-dot than the original default (too much whitespace)
+# and a second dashed style with longer lines between dashes
+LINESTYLES = [:solid, :dash, :dot, [0, 3, 4, 5, 6], [0, 5, 6]]
 cycle = Cycle([:color, :marker], covary = true)
 _FONTSIZE = 18
 _LABELSIZE = 24
