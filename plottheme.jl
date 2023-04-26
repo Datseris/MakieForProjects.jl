@@ -250,7 +250,10 @@ if isdefined(Main, :DrWatson)
         # Expects white background image
         img = DrWatson.FileIO.load(file)
         x = map(img) do px
-            neg = Makie.RGB(one(eltype(img)) - px)
+            hsl = Makie.HSL(px)
+            l = 1 - hsl.l
+            neg = Makie.RGB(Makie.HSL(hsl.h, hsl.s, l))
+            # neg = Makie.RGB(one(eltype(img)) - px)
             bg = abs2(neg) < 0.01 ? 0 : 1
             Makie.RGBA(neg, bg)
         end
