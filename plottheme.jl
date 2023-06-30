@@ -244,17 +244,20 @@ if isdefined(Main, :DrWatson)
 
     # Using FileIO's load to make figures for black slides
     """
-        negate_remove_bg(file; threshold = 0.02)
+        negate_remove_bg(file; threshold = 0.02, bg = :white)
 
-    Create an inverted version of the image at `file` with background removed.
+    Create an inverted version of the image at `file` with background removed,
+    so that it may be used in environments with dark background.
     The `threshold` decides when a pixel should be made transparent.
+    If the image already has a dark background, pass `bg = :black` instead,
+    which will not invert the image but still remove the background.
     """
-    function negate_remove_bg(file; threshold = 0.02)
+    function negate_remove_bg(file; threshold = 0.02, bg = :white)
         # Expects white background image
         img = DrWatson.FileIO.load(file)
         x = map(img) do px
             hsl = Makie.HSL(px)
-            l = 1 - hsl.l
+            l = bg == :white ? (1 - hsl.l) : hsl.l
             neg = Makie.RGB(Makie.HSL(hsl.h, hsl.s, l))
             # neg = Makie.RGB(one(eltype(img)) - px)
             bg = abs2(neg) < threshold ? 0 : 1
