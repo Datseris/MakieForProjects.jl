@@ -227,47 +227,6 @@ function axesgrid(m, n;
 end
 const subplotgrid = axesgrid
 
-if isdefined(Main, :DrWatson)
-    # Extension of DrWatson's save functionality for default CairoMakie saving
-    function DrWatson._wsave(filename, fig::Makie.Figure, args...; kwargs...)
-        if filename[end-3] != '.'; filename *= ".png"; end
-        if isdefined(Main, :CairoMakie)
-            CairoMakie.activate!()
-            CairoMakie.save(filename, fig, args...; px_per_unit = 4, kwargs...)
-            if isdefined(Main, :GLMakie)
-                GLMakie.activate!()
-            end
-        else
-            Makie.save(filename, fig, args...; kwargs...)
-        end
-    end
-
-    # Using FileIO's load to make figures for black slides
-    """
-        negate_remove_bg(file; threshold = 0.02, bg = :white)
-
-    Create an inverted version of the image at `file` with background removed,
-    so that it may be used in environments with dark background.
-    The `threshold` decides when a pixel should be made transparent.
-    If the image already has a dark background, pass `bg = :black` instead,
-    which will not invert the image but still remove the background.
-    """
-    function negate_remove_bg(file; threshold = 0.02, bg = :white)
-        # Expects white background image
-        img = DrWatson.FileIO.load(file)
-        x = map(img) do px
-            hsl = Makie.HSL(px)
-            l = bg == :white ? (1 - hsl.l) : hsl.l
-            neg = Makie.RGB(Makie.HSL(hsl.h, hsl.s, l))
-            # neg = Makie.RGB(one(eltype(img)) - px)
-            bg = abs2(neg) < threshold ? 0 : 1
-            Makie.RGBA(neg, bg)
-        end
-        name, ext = splitext(file)
-        DrWatson.FileIO.save(name*"_inv"*ext, x)
-    end
-end
-
 
 """
     label_axes!(axs::Array{Axis};
@@ -336,3 +295,74 @@ function space_out_legend!(legend)
     legend.colgap[] += difference / (legend.nbanks[] - 1)
     return
 end
+########################################################################################
+# Color manipulation
+########################################################################################
+"""
+    invert_luminance(color)
+
+Return a color with same hue and saturation but luminance inverted.
+"""
+function invert_luminance(color)
+    c = to_color(color)
+    hsl = Makie.HSLA(c)
+    l = 1 - hsl.l
+    neg = Makie.RGBA(Makie.HSL(hsl.h, hsl.s, l, hsl.alpha))
+    return neg
+end
+
+"""
+    lighten(c, f = 1.2)
+
+Lighten given color `c` by multiplying its luminance with `f`.
+If `f` is less than 1, the color is darkened.
+"""
+function lighten(c, f = 1.2)
+    c = to_color(c)
+    hsl = Makie.HSLA(c)
+    neg = Makie.RGBAf(Makie.HSLA(hsl.h, hsl.s, clamp(hsl.l*f, 0.0, 1.0), hsl.alpha))
+    neg = Makie.RGBf(Makie.HSL(hsl.h, hsl.s, clamp(hsl.l*f, 0.0, 1.0)))
+    return neg
+end
+
+if isdefined(Main, :DrWatson)
+    # Extension of DrWatson's save functionality for default CairoMakie saving
+    function DrWatson._wsave(filename, fig::Makie.Figure, args...; kwargs...)
+        if filename[end-3] != '.'; filename *= ".png"; end
+        if isdefined(Main, :CairoMakie)
+            CairoMakie.activate!()
+            CairoMakie.save(filename, fig, args...; px_per_unit = 4, kwargs...)
+            if isdefined(Main, :GLMakie)
+                GLMakie.activate!()
+            end
+        else
+            Makie.save(filename, fig, args...; kwargs...)
+        end
+    end
+
+    # Using FileIO's load to make figures for black slides
+    """
+        negate_remove_bg(file; threshold = 0.02, bg = :white)
+
+    Create an inverted version of the image at `file` with background removed,
+    so that it may be used in environments with dark background.
+    The `threshold` decides when a pixel should be made transparent.
+    If the image already has a dark background, pass `bg = :black` instead,
+    which will not invert the image but still remove the background.
+    """
+    function negate_remove_bg(file; threshold = 0.02, bg = :white)
+        # Expects white background image
+        img = DrWatson.FileIO.load(file)
+        x = map(img) do px
+            hsl = Makie.HSL(px)
+            l = bg == :white ? (1 - hsl.l) : hsl.l
+            neg = Makie.RGB(Makie.HSL(hsl.h, hsl.s, l))
+            # neg = Makie.RGB(one(eltype(img)) - px)
+            bg = abs2(neg) < threshold ? 0 : 1
+            Makie.RGBA(neg, bg)
+        end
+        name, ext = splitext(file)
+        DrWatson.FileIO.save(name*"_inv"*ext, x)
+    end
+end
+
