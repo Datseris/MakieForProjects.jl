@@ -1,6 +1,7 @@
 export COLORSCHEME, COLORS, MARKERS, LINESTYLES
 export figuretitle!, axesgrid, subplotgrid
 export label_axes!, space_out_legend!
+export lighten, invert_luminance
 
 ########################################################################################
 # Colorscheme
