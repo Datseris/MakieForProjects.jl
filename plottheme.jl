@@ -72,7 +72,15 @@ COLORS = CyclicContainer(COLORSCHEME)
 MARKERS = [:circle, :dtriangle, :rect, :star5, :xcross, :diamond]
 # Linestyles implement a better dash-dot than the original default (too much whitespace)
 # and a second dashed style with longer lines between dashes
-LINESTYLES = [:solid, :dash, :dot, [0, 3, 4, 5, 6], [0, 5, 6]]
+# We define a custom type because we need a
+# workaround until https://github.com/MakieOrg/Makie.jl/issues/2851 is fixed
+struct LinestyleFix
+    value::Vector{Float32}
+end
+# Overload conversions
+Makie.convert_attribute(A::LinestyleFix, ::key"linestyle") = [float(x - A.value[1]) for x in A.value]
+LINESTYLES = [:solid, :dash, :dot, LinestyleFix([0, 3, 4, 5, 6]), LinestyleFix([0, 5, 6])]
+
 cycle = Cycle([:color, :marker], covary = true)
 _FONTSIZE = 18
 _LABELSIZE = 24
