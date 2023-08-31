@@ -337,7 +337,6 @@ end
 if isdefined(Main, :DrWatson)
     # Extension of DrWatson's save functionality for default CairoMakie saving
     function DrWatson._wsave(filename, fig::Makie.Figure, args...; kwargs...)
-        if filename[end-3] != '.'; filename *= ".png"; end
         if isdefined(Main, :CairoMakie)
             CairoMakie.activate!()
             CairoMakie.save(filename, fig, args...; px_per_unit = 4, kwargs...)
@@ -353,22 +352,20 @@ if isdefined(Main, :DrWatson)
     """
         negate_remove_bg(file; threshold = 0.02, bg = :white)
 
-    Create an inverted version of the image at `file` with background removed,
+    Create an negated version of the image at `file` with background removed,
     so that it may be used in environments with dark background.
     The `threshold` decides when a pixel should be made transparent.
     If the image already has a dark background, pass `bg = :black` instead,
-    which will not invert the image but still remove the background.
+    which will not negate the image but still remove the background.
     """
     function negate_remove_bg(file; threshold = 0.02, bg = :white)
-        # Expects white background image
         img = DrWatson.FileIO.load(file)
         x = map(img) do px
             hsl = Makie.HSL(px)
-            l = bg == :white ? (1 - hsl.l) : hsl.l
+            l = (bg == :white) ? (1 - hsl.l) : hsl.l
             neg = Makie.RGB(Makie.HSL(hsl.h, hsl.s, l))
-            # neg = Makie.RGB(one(eltype(img)) - px)
-            bg = abs2(neg) < threshold ? 0 : 1
-            Makie.RGBA(neg, bg)
+            α = abs2(neg) < threshold ? 0 : 1
+            Makie.RGBA(neg, α)
         end
         name, ext = splitext(file)
         DrWatson.FileIO.save(name*"_inv"*ext, x)
