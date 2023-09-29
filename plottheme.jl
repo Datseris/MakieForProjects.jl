@@ -350,7 +350,7 @@ if isdefined(Main, :DrWatson)
 
     # Using FileIO's load to make figures for black slides
     """
-        negate_remove_bg(file; threshold = 0.02, bg = :white)
+        negate_remove_bg(file; threshold = 0.02, bg = :white, overwrite = false)
 
     Create an negated version of the image at `file` with background removed,
     so that it may be used in environments with dark background.
@@ -358,7 +358,7 @@ if isdefined(Main, :DrWatson)
     If the image already has a dark background, pass `bg = :black` instead,
     which will not negate the image but still remove the background.
     """
-    function negate_remove_bg(file; threshold = 0.02, bg = :white)
+    function negate_remove_bg(file; threshold = 0.02, bg = :white, overwrite = false)
         img = DrWatson.FileIO.load(file)
         x = map(img) do px
             hsl = Makie.HSL(px)
@@ -367,8 +367,19 @@ if isdefined(Main, :DrWatson)
             α = abs2(neg) < threshold ? 0 : 1
             Makie.RGBA(neg, α)
         end
-        name, ext = splitext(file)
-        DrWatson.FileIO.save(name*"_inv"*ext, x)
+        if overwrite
+            newname = file
+        else
+            name, ext = splitext(file)
+            newname = name*"_inv"*ext
+        end
+        DrWatson.FileIO.save(newname, x)
     end
-end
 
+
+    function negate_remove_save(filename, fig::Makie.Figure)
+        DrWatson.wsave(filename, fig)
+        negate_remove_bg(filename; overwrite = true)
+    end
+
+end
