@@ -361,10 +361,10 @@ if isdefined(Main, :DrWatson)
     function negate_remove_bg(file; threshold = 0.02, bg = :white, overwrite = false)
         img = DrWatson.FileIO.load(file)
         x = map(img) do px
-            hsl = Makie.HSL(px)
+            hsl = Makie.HSLA(px)
             l = (bg == :white) ? (1 - hsl.l) : hsl.l
             neg = Makie.RGB(Makie.HSL(hsl.h, hsl.s, l))
-            α = abs2(neg) < threshold ? 0 : 1
+            α = abs2(neg) < threshold ? 0 : hsl.alpha
             Makie.RGBA(neg, α)
         end
         if overwrite
