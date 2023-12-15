@@ -249,7 +249,7 @@ function label_axes!(axs;
         labels = range('a'; step = 1, length = length(axs)),
         transformation = x -> "("*string(x)*")",
         valign = :top, halign = :right,
-        pad = 5, kwargs...,
+        pad = 5, add_box = false, kwargs...,
     )
 
     lbs = @. string(transformation(labels))
@@ -276,10 +276,12 @@ function label_axes!(axs;
             valign, halign, padding, font = :bold, justification = :center,
             kwargs...
         )
-        # but we can access the internals and get the box of the label,
-        # and then make an actual box around it
-        bx = Box(first(axs).parent; bbox = lab.layoutobservables.computedbbox, color = "gray")
-        Makie.translate!(bx.blockscene, 0, 0, -1)
+        if add_box
+            # but we can access the internals and get the box of the label,
+            # and then make an actual box around it
+            bx = Box(first(axs).parent; bbox = lab.layoutobservables.computedbbox, color = "transparent")
+            Makie.translate!(bx.blockscene, 0, 0, -1)
+        end
     end
     return
 end
