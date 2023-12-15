@@ -82,8 +82,8 @@ Makie.convert_attribute(A::LinestyleFix, ::key"linestyle") = [float(x - A.value[
 LINESTYLES = [:solid, :dash, :dot, LinestyleFix([0, 3, 4, 5, 6]), LinestyleFix([0, 5, 6])]
 
 cycle = Cycle([:color, :marker], covary = true)
-_FONTSIZE = 18
-_LABELSIZE = 24
+_FONTSIZE = 16
+_LABELSIZE = 20
 
 
 default_theme = Makie.Theme(
@@ -97,7 +97,7 @@ default_theme = Makie.Theme(
     linewidth = 3.0,
     # Sizes of figure and font
     Figure = (
-        resolution = (1000, 600),
+        size = (1000, 600),
         figure_padding = 20,
     ),
     fontsize = _FONTSIZE,
@@ -123,7 +123,7 @@ set_theme!(default_theme)
 # Testing style (colorscheme)
 if TEST_NEW_THEME
     using Random
-    fig = Figure(resolution = (1200, 800)) # show colors
+    fig = Figure(size = (1200, 800)) # show colors
     ax6 = Axis(fig[2,3])
     ax5 = Axis(fig[2,2])
     ax4 = Axis(fig[2,1])
@@ -360,13 +360,7 @@ if isdefined(Main, :DrWatson)
     """
     function negate_remove_bg(file; threshold = 0.02, bg = :white, overwrite = false)
         img = DrWatson.FileIO.load(file)
-        x = map(img) do px
-            hsl = Makie.HSLA(px)
-            l = (bg == :white) ? (1 - hsl.l) : hsl.l
-            neg = Makie.RGB(Makie.HSL(hsl.h, hsl.s, l))
-            α = abs2(neg) < threshold ? 0 : hsl.alpha
-            Makie.RGBA(neg, α)
-        end
+        x = map(px -> invert_color(px, bg, threshold), img)
         if overwrite
             newname = file
         else
@@ -376,6 +370,13 @@ if isdefined(Main, :DrWatson)
         DrWatson.FileIO.save(newname, x)
     end
 
+    function invert_color(px, bg = :white, threshold = 0.02)
+        hsl = Makie.HSLA(to_color(px))
+        l = (bg == :white) ? (1 - hsl.l) : hsl.l
+        neg = Makie.RGB(Makie.HSL(hsl.h, hsl.s, l))
+        α = abs2(neg) < threshold ? 0 : hsl.alpha
+        Makie.RGBA(neg, α)
+    end
 
     function negate_remove_save(filename, fig::Makie.Figure)
         DrWatson.wsave(filename, fig)
