@@ -20,17 +20,6 @@ end
 include("plottheme.jl")
 ```
 
-at the end of this file, add:
-```julia
-# include online theme
-set_theme!(default_theme)
-# do any adjustments
-update_theme!(;
-    resolution = (figwidth, figheight),
-    Lines = (cycle = Cycle([:color, :linestyle], covary = true),),
-)
-```
-
 If the project uses DrWatson's module-based activation, via `@quickactivate :MyProjectName`, then these two commands need to be put in the module's `__init__()` function instead:
 
 ```julia
