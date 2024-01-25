@@ -4,7 +4,9 @@ Theming and convenience tools for plotting with Makie.jl used by George Datseris
 
 To use this, make a Julia file with contents:
 ```julia
-using Makie # or GLMakie, CairoMakie, etc.
+if !any(name -> isdefined(Main, name), [:Makie, :GLMakie, :CairoMakie])
+    using CairoMakie
+end
 import Downloads
 
 ENV["COLORCHEME"] = "JuliaDynamics" # or others, see `plottheme.jl`
