@@ -162,7 +162,7 @@ function figuretitle!(fig, title;
         kwargs...,
     )
     Label(fig[0, :], title;
-        tellheight = true, tellwidth = false, valign, padding, font, kwargs...
+        tellheight = true, tellwidth = false, fontsize = _LABELSIZE, valign, padding, font, kwargs...
     )
     return
 end
