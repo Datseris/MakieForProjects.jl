@@ -47,12 +47,13 @@ COLORSCHEME = COLORSCHEMES[get(ENV, "COLORSCHEME", "JuliaDynamics")]
 # ENV["TEST_NEW_THEME"] = true
 TEST_NEW_THEME = get(ENV, "TEST_NEW_THEME", "false") == "true"
 
-mutable struct CyclicContainer
-    c::Vector
+mutable struct CyclicContainer{V} <: AbstractVector{V}
+    c::Vector{V}
     n::Int
 end
 CyclicContainer(c) = CyclicContainer(c, 0)
 
+Base.size(c::CyclicContainer) = size(c.c)
 Base.length(c::CyclicContainer) = length(c.c)
 Base.iterate(c::CyclicContainer, state=1) = Base.iterate(c.c, state)
 Base.getindex(c::CyclicContainer, i) = c.c[mod1(i, length(c))]
@@ -69,17 +70,10 @@ COLORS = CyclicContainer(COLORSCHEME)
 # Set Makie theme
 ########################################################################################
 # The rest require `Makie` accessible in global scope
-MARKERS = [:circle, :dtriangle, :rect, :star5, :xcross, :diamond]
+MARKERS = CyclicContainer([:circle, :dtriangle, :rect, :star5, :xcross, :diamond])
 # Linestyles implement a better dash-dot than the original default (too much whitespace)
 # and a second dashed style with longer lines between dashes
-# We define a custom type because we need a
-# workaround until https://github.com/MakieOrg/Makie.jl/issues/2851 is fixed
-struct LinestyleFix
-    value::Vector{Float32}
-end
-# Overload conversions
-Makie.convert_attribute(A::LinestyleFix, ::key"linestyle") = [float(x - A.value[1]) for x in A.value]
-LINESTYLES = [:solid, :dash, :dot, LinestyleFix([0, 3, 4, 5, 6]), LinestyleFix([0, 5, 6])]
+LINESTYLES = CyclicContainer([:solid, :dash, :dot, Linestyle([0, 3, 4, 5, 6]), Linestyle([0, 5, 6])])
 
 cycle = Cycle([:color, :marker], covary = true)
 _FONTSIZE = 16
@@ -114,11 +108,11 @@ default_theme = Makie.Theme(
     ScatterLines = (cycle = cycle, markersize = 5),
     Scatter = (cycle = cycle, markersize = 15),
     Band = (cycle = :color,),
+    Lines = (cycle = Cycle([:color, :linestyle], covary = true),),
     Label = (textsize = _LABELSIZE,)
 )
 
 set_theme!(default_theme)
-
 
 # Testing style (colorscheme)
 if TEST_NEW_THEME
@@ -131,7 +125,7 @@ if TEST_NEW_THEME
     ax2 = Axis(fig[1,2]; title = "brightness")
     ax3 = Axis(fig[1,3]; title = "saturation")
     linewidth = 60
-    L = length(COLORSCHEME)
+    L = length(COLORS)
     function graycolor(s)
         x = round(Int, 100s)
         return "gray"*string(x)
