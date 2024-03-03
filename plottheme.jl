@@ -33,19 +33,20 @@ COLORSCHEMES = Dict(
         "#9C278C",
     ],
     "GreenMetal" => [
-        "#478C5C",
-        "#184B29",
-        "#2B1E1E", # darkest
-        "#8A9EA0",
-        "#224269",
-        "#A2CD88", # lightest
+        "#35B15A",
+        "#748790",
+        "#125D1D",
+        "#BBA222",
+        "#2B33AD",
+        "#2B2931",
     ],
 
 )
 
 COLORSCHEME = COLORSCHEMES[get(ENV, "COLORSCHEME", "JuliaDynamics")]
-# ENV["TEST_NEW_THEME"] = true
+# COLORSCHEME = COLORSCHEMES["GreenMetal"]
 TEST_NEW_THEME = get(ENV, "TEST_NEW_THEME", "false") == "true"
+# ENV["TEST_NEW_THEME"] = true
 
 mutable struct CyclicContainer{V} <: AbstractVector{V}
     c::Vector{V}
