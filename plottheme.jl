@@ -51,8 +51,8 @@ COLORSCHEMES = Dict(
 
 )
 
-ENV["COLORSCHEME"]  = "CloudySky" # include these two to test
-ENV["TEST_NEW_THEME"] = true
+# ENV["COLORSCHEME"]  = "CloudySky" # include these two to test
+# ENV["TEST_NEW_THEME"] = true
 
 COLORSCHEME = COLORSCHEMES[get(ENV, "COLORSCHEME", "JuliaDynamics")]
 TEST_NEW_THEME = get(ENV, "TEST_NEW_THEME", "false") == "true"
