@@ -344,11 +344,8 @@ if isdefined(Main, :DrWatson)
     # Extension of DrWatson's save functionality for default CairoMakie saving
     function DrWatson._wsave(filename, fig::Makie.Figure, args...; kwargs...)
         if isdefined(Main, :CairoMakie)
-            CairoMakie.activate!()
-            CairoMakie.save(filename, fig, args...; px_per_unit = 4, kwargs...)
-            if isdefined(Main, :GLMakie)
-                GLMakie.activate!()
-            end
+            # Always save via CairoMakie for high quality if possible
+            CairoMakie.save(filename, fig, args...; px_per_unit = 2, kwargs...)
         else
             Makie.save(filename, fig, args...; kwargs...)
         end
@@ -383,10 +380,33 @@ if isdefined(Main, :DrWatson)
         α = abs2(neg) < threshold ? 0 : hsl.alpha
         Makie.RGBA(neg, α)
     end
-
     function negate_remove_save(filename, fig::Makie.Figure)
         DrWatson.wsave(filename, fig)
         negate_remove_bg(filename; overwrite = true)
+    end
+
+    """
+        remove_bg(file; threshold = 0.02, overwrite = false)
+
+    Remove the background for figure in `file` (all pixels with luminosity > 1 - threshold).
+    Either overwrite original file or make a copy with suffix _bgr.
+    """
+    function remove_bg(file; threshold = 0.02, overwrite = false)
+        img = DrWatson.FileIO.load(file)
+        x = map(px -> make_transparent_pixel(px, threshold), img)
+        if overwrite
+            newname = file
+        else
+            name, ext = splitext(file)
+            newname = name*"_bgr"*ext
+        end
+        DrWatson.FileIO.save(newname, x)
+    end
+    function make_transparent_pixel(px, threshold = 0.02)
+        α = Makie.RGBA(to_color(px)).alpha
+        c = Makie.RGB(to_color(px))
+        α = abs2(c) > 1 - threshold ? 0 : α
+        return Makie.RGBA(c, α)
     end
 
 end
