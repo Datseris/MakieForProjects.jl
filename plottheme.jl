@@ -24,6 +24,14 @@ COLORSCHEMES = Dict(
         "#691105",
         "#00A9B5",
     ],
+    "CloudySky" => [
+        "#0099CC",
+        "#67757E",
+        "#1B1D4B",
+        "#D07B17",
+        "#6F0D4D",
+        "#0D9276",
+    ],
     "Flames" => [
         "#84150F",
         "#D65A35",
@@ -43,10 +51,11 @@ COLORSCHEMES = Dict(
 
 )
 
+ENV["COLORSCHEME"]  = "CloudySky" # include these two to test
+ENV["TEST_NEW_THEME"] = true
+
 COLORSCHEME = COLORSCHEMES[get(ENV, "COLORSCHEME", "JuliaDynamics")]
-# COLORSCHEME = COLORSCHEMES["GreenMetal"]
 TEST_NEW_THEME = get(ENV, "TEST_NEW_THEME", "false") == "true"
-# ENV["TEST_NEW_THEME"] = true
 
 mutable struct CyclicContainer{V} <: AbstractVector{V}
     c::Vector{V}
@@ -118,7 +127,7 @@ set_theme!(default_theme)
 # Testing style (colorscheme)
 if TEST_NEW_THEME
     using Random
-    fig = Figure(size = (1200, 800)) # show colors
+    fig = Figure(size = (900, 600)) # show colors
     ax6 = Axis(fig[2,3])
     ax5 = Axis(fig[2,2])
     ax4 = Axis(fig[2,1])
