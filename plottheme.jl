@@ -51,11 +51,9 @@ COLORSCHEMES = Dict(
 
 )
 
-# ENV["COLORSCHEME"]  = "CloudySky" # include these two to test
-# ENV["TEST_NEW_THEME"] = true
-
+# ENV["COLORSCHEME"]  = "CloudySky" # change this to test
+TEST_NEW_THEME = false
 COLORSCHEME = COLORSCHEMES[get(ENV, "COLORSCHEME", "JuliaDynamics")]
-TEST_NEW_THEME = get(ENV, "TEST_NEW_THEME", "false") == "true"
 
 mutable struct CyclicContainer{V} <: AbstractVector{V}
     c::Vector{V}
