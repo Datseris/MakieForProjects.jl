@@ -241,11 +241,14 @@ const subplotgrid = axesgrid
 
 """
     label_axes!(axs::Array{Axis};
-        valign = :top, halign = :right, pad = 5, kwargs...
+        valign = :top, halign = :right, pad = 5,
+        labels = range('a'; step = 1, length = length(axs)),
+        add_box = false, boxkw = NamedTuple(), kw...
     )
 
 Add labels (like a,b,c,...) to all axes.
-Keywords customly adjust location, and `kwargs` are propagated to `Label`.
+Keywords customly adjust location, and `kw` are propagated to `Label`.
+If chosen, a box is added around the label with options `boxkw` propagated to `Box`.
 """
 function label_axes!(axs;
         labels = range('a'; step = 1, length = length(axs)),
@@ -284,6 +287,17 @@ function label_axes!(axs;
             bx = Box(first(axs).parent; bbox = lab.layoutobservables.computedbbox, color = "transparent")
             Makie.translate!(bx.blockscene, 0, 0, -1)
         end
+
+        # TODO: This is a much better option:
+        # gc = ax.layoutobservables.gridcontent[]
+        # pos = gc.parent[gc.span.rows, gc.span.cols]
+        # Textbox(pos;
+        #     placeholder = string(round(rmi; sigdigits = 2)),
+        #     textcolor_placeholder = :black, valign = :top, halign = :right,
+        #     tellwidth = false, tellheight=false, boxcolor = (:white, 0.75),
+        #     textpadding = (4, 4, 4, 4)
+        # )
+
     end
     return
 end
