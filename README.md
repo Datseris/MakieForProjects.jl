@@ -9,7 +9,10 @@ if !any(name -> isdefined(Main, name), [:Makie, :GLMakie, :CairoMakie])
 end
 import Downloads
 
+# decide theme:
 ENV["COLORCHEME"] = "JuliaDynamics" # or others, see `plottheme.jl`
+ENV["BGCOLOR"] = :transparent       # anything for `backgroundcolor` of Makie
+ENV["AXISCOLOR"] = :white           # color of all axis elements (labels, spines, ticks)
 
 try
     Downloads.download(
@@ -24,13 +27,14 @@ end
 include("plottheme.jl")
 ```
 
-If the project uses DrWatson's module-based activation, via `@quickactivate :MyProjectName`, then these two commands need to be put in the module's `__init__()` function instead:
+If the project uses DrWatson's module-based activation, via `@quickactivate :MyProjectName`, then these commands need to be put in the module's `__init__()` function instead:
 
 ```julia
 function __init__()
     set_theme!(default_theme)
+    # whatever else you want:
     update_theme!(;
-        resolution = (figwidth, figheight),
+        resolution = (42, 123),
         Lines = (cycle = Cycle([:color, :linestyle], covary = true),),
     )
 end

@@ -16,6 +16,14 @@ COLORSCHEMES = Dict(
         "#791457",
         "#6C768C",
     ],
+    "JuliaDynamicsLight" => [ # for usage with black or very dark background
+        "#855DE4",
+        "#BBC0E6",
+        "#15C1A5",
+        "#D8BC50",
+        "#EC59BB",
+        "#737D93",
+    ],
     "Petrol" => [
         "#006269",
         "#BD5DAA",
@@ -48,12 +56,13 @@ COLORSCHEMES = Dict(
         "#2B33AD",
         "#2B2931",
     ],
-
 )
 
-# ENV["COLORSCHEME"]  = "CloudySky" # change this to test
-TEST_NEW_THEME = false
+# ENV["COLORSCHEME"]  = "JuliaDynamicsLight" # change this to test
+TEST_NEW_THEME = true
 COLORSCHEME = COLORSCHEMES[get(ENV, "COLORSCHEME", "JuliaDynamics")]
+BGCOLOR = get(ENV, "BGCOLOR", :transparent)
+AXISCOLOR = get(ENV, "AXISCOLOR", :white)
 
 mutable struct CyclicContainer{V} <: AbstractVector{V}
     c::Vector{V}
@@ -87,9 +96,9 @@ cycle = Cycle([:color, :marker], covary = true)
 _FONTSIZE = 16
 _LABELSIZE = 20
 
-
 default_theme = Makie.Theme(
     # Main theme (colors, markers, etc.)
+    backgroundcolor = BGCOLOR,
     palette = (
         color = COLORSCHEME,
         marker = MARKERS,
@@ -107,6 +116,20 @@ default_theme = Makie.Theme(
         xlabelsize = _LABELSIZE,
         ylabelsize = _LABELSIZE,
         titlesize = _LABELSIZE,
+        backgroundcolor = BGCOLOR,
+        xgridcolor = AXISCOLOR,
+        ygridcolor = AXISCOLOR,
+        xtickcolor = AXISCOLOR,
+        ytickcolor = AXISCOLOR,
+        bottomspinecolor = AXISCOLOR,
+        topspinecolor = AXISCOLOR,
+        leftspinecolor = AXISCOLOR,
+        rightspinecolor = AXISCOLOR,
+        xlabelcolor = AXISCOLOR,
+        ylabelcolor = AXISCOLOR,
+        yticklabelcolor = AXISCOLOR,
+        xticklabelcolor = AXISCOLOR,
+        titlecolor = AXISCOLOR,
     ),
     Legend = (
         patchsize = (40f0, 20),
@@ -334,7 +357,7 @@ function invert_luminance(color)
     c = to_color(color)
     hsl = Makie.HSLA(c)
     l = 1 - hsl.l
-    neg = Makie.RGBA(Makie.HSL(hsl.h, hsl.s, l, hsl.alpha))
+    neg = Makie.RGBA(Makie.HSLA(hsl.h, hsl.s, l, hsl.alpha))
     return neg
 end
 
