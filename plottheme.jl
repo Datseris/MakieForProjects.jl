@@ -18,11 +18,11 @@ COLORSCHEMES = Dict(
     ],
     "JuliaDynamicsLight" => [ # for usage with black or very dark background
         "#855DE4",
-        "#BBC0E6",
+        "#B7BEF1",
         "#15C1A5",
         "#D8BC50",
         "#EC59BB",
-        "#737D93",
+        "#737A8C",
     ],
     "Petrol" => [
         "#006269",
