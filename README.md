@@ -19,8 +19,8 @@ try
         "https://raw.githubusercontent.com/Datseris/plottheme/main/plottheme.jl",
         joinpath(@__DIR__, "_plottheme.jl")
     )
-    cp(joinpath(@__DIR__, "_plottheme.jl"), joinpath(@__DIR__, "plottheme.jl"))
-    rm(joinpath(@__DIR__, "_plottheme.jl"))
+    cp(joinpath(@__DIR__, "_plottheme.jl"), joinpath(@__DIR__, "plottheme.jl"); force = true)
+    rm(joinpath(@__DIR__, "_plottheme.jl"); force = true)
 catch
 end
 
