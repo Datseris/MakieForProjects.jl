@@ -59,10 +59,10 @@ COLORSCHEMES = Dict(
 )
 
 # ENV["COLORSCHEME"]  = "JuliaDynamicsLight" # change this to test
-TEST_NEW_THEME = true
+TEST_NEW_THEME = false
 COLORSCHEME = COLORSCHEMES[get(ENV, "COLORSCHEME", "JuliaDynamics")]
 BGCOLOR = get(ENV, "BGCOLOR", :transparent)
-AXISCOLOR = get(ENV, "AXISCOLOR", :white)
+AXISCOLOR = get(ENV, "AXISCOLOR", :black)
 
 mutable struct CyclicContainer{V} <: AbstractVector{V}
     c::Vector{V}

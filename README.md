@@ -12,7 +12,7 @@ import Downloads
 # decide theme:
 ENV["COLORCHEME"] = "JuliaDynamics" # or others, see `plottheme.jl`
 ENV["BGCOLOR"] = :transparent       # anything for `backgroundcolor` of Makie
-ENV["AXISCOLOR"] = :white           # color of all axis elements (labels, spines, ticks)
+ENV["AXISCOLOR"] = :black           # color of all axis elements (labels, spines, ticks)
 
 try
     Downloads.download(
