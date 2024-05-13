@@ -16,7 +16,7 @@ COLORSCHEMES = Dict(
         "#791457",
         "#6C768C",
     ],
-    "JuliaDynamicsLight" => [ # for usage with black or very dark background
+    "JuliaDynamicsLight" => [ # for usage with dark background
         "#855DE4",
         "#B7BEF1",
         "#15C1A5",
@@ -133,6 +133,17 @@ default_theme = Makie.Theme(
     ),
     Legend = (
         patchsize = (40f0, 20),
+    ),
+    Colorbar = (
+        gridcolor = AXISCOLOR,
+        tickcolor = AXISCOLOR,
+        bottomspinecolor = AXISCOLOR,
+        topspinecolor = AXISCOLOR,
+        leftspinecolor = AXISCOLOR,
+        rightspinecolor = AXISCOLOR,
+        labelcolor = AXISCOLOR,
+        ticklabelcolor = AXISCOLOR,
+        titlecolor = AXISCOLOR,
     ),
     # This command makes the cycle of color and marker
     # co-vary at the same time in plots that use markers
