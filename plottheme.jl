@@ -20,7 +20,7 @@ COLORSCHEMES = Dict(
         "#855DE4",
         "#B7BEF1",
         "#15C1A5",
-        "#D8BC50",
+        "#DCC261",
         "#EC59BB",
         "#737A8C",
     ],
