@@ -158,6 +158,8 @@ set_theme!(default_theme)
 
 # Testing style (colorscheme)
 if TEST_NEW_THEME
+    # See also this website to see how the colorscheme looks for colorblind
+    # https://davidmathlogic.com/colorblind
     using Random
     fig = Figure(size = (900, 600)) # show colors
     ax6 = Axis(fig[2,3])
