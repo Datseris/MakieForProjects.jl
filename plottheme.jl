@@ -1,6 +1,6 @@
 export COLORSCHEME, COLORS, MARKERS, LINESTYLES
 export figuretitle!, axesgrid, subplotgrid
-export label_axes!, space_out_legend!
+export label_axes!, space_out_legend!, textbox!
 export lighten, invert_luminance
 
 ########################################################################################
@@ -339,6 +339,26 @@ function label_axes!(axs;
 end
 
 """
+    textbox!(ax::Axis, text::AbstractString; kw...)
+
+Add a small textbox to `ax` containing the given `text`.
+By default, the textbox is placed at the top right corner with proper alignment,
+and it is slightly transparent. See the source code for the keywords you need
+to adjust for different placement or styling.
+"""
+function textbox!(ax, text; kw...)
+    gc = ax.layoutobservables.gridcontent[]
+    pos = gc.parent[gc.span.rows, gc.span.cols]
+    Textbox(pos;
+        placeholder = text,
+        textcolor_placeholder = :black, valign = :top, halign = :right,
+        tellwidth = false, tellheight=false, boxcolor = (:white, 0.75),
+        textpadding = (2, 2, 2, 2), kw...
+    )
+    return
+end
+
+"""
     space_out_legend!(legend)
 
 Space out the contents of a given legend, so that the banks are spaced equidistantly
@@ -388,6 +408,9 @@ function lighten(c, f = 1.2)
     return neg
 end
 
+########################################################################################
+# I/O
+########################################################################################
 if isdefined(Main, :DrWatson)
     # Extension of DrWatson's save functionality for default CairoMakie saving
     function DrWatson._wsave(filename, fig::Makie.Figure, args...; kwargs...)
