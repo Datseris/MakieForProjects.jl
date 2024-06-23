@@ -1,41 +1,19 @@
-# plottheme
+# MakieThemeing.jl
 
 Theming and convenience tools for plotting with Makie.jl used by George Datseris.
+You are more than welcomed to use this to benefit from the color themes,
+or the convenience functions within. Feel free to contribute PRs adding your own themes or more convenience functions.
 
-To use this, make a Julia file with contents:
+I develop color themes using the website <https://davidmathlogic.com/colorblind/>
+and the internal function `test_new_theme()`.
+
+## Usage
+
+Simply add the repo url via `Pkg.add`.
+Altering themeing properties is done via environment variables,
+eg
 ```julia
-if !any(name -> isdefined(Main, name), [:Makie, :GLMakie, :CairoMakie])
-    using CairoMakie
-end
-import Downloads
-
-# decide theme:
 ENV["COLORSCHEME"] = "JuliaDynamics" # or others, see `plottheme.jl`
 ENV["BGCOLOR"] = :transparent       # anything for `backgroundcolor` of Makie
 ENV["AXISCOLOR"] = :black           # color of all axis elements (labels, spines, ticks)
-
-try
-    Downloads.download(
-        "https://raw.githubusercontent.com/Datseris/plottheme/main/plottheme.jl",
-        joinpath(@__DIR__, "_plottheme.jl")
-    )
-    cp(joinpath(@__DIR__, "_plottheme.jl"), joinpath(@__DIR__, "plottheme.jl"); force = true)
-    rm(joinpath(@__DIR__, "_plottheme.jl"); force = true)
-catch
-end
-
-include("plottheme.jl")
-```
-
-If the project uses DrWatson's module-based activation, via `@quickactivate :MyProjectName`, then these commands need to be put in the module's `__init__()` function instead:
-
-```julia
-function __init__()
-    set_theme!(default_theme)
-    # whatever else you want:
-    update_theme!(;
-        resolution = (42, 123),
-        Lines = (cycle = Cycle([:color, :linestyle], covary = true),),
-    )
-end
 ```
