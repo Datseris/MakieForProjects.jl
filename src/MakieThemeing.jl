@@ -161,10 +161,11 @@ DEFAULT_THEME = Makie.Theme(
 set_theme!(DEFAULT_THEME)
 
 # Testing style (colorscheme)
+using Random
+
 function test_new_theme()
     # See also this website to see how the colorscheme looks for colorblind
     # https://davidmathlogic.com/colorblind
-    using Random
     fig = Figure(size = (900, 600)) # show colors
     ax6 = Axis(fig[2,3])
     ax5 = Axis(fig[2,2])
