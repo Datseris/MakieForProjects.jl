@@ -1,4 +1,3 @@
-
 ########################################################################################
 # Colorscheme
 ########################################################################################
@@ -55,10 +54,6 @@ COLORSCHEMES = Dict(
 )
 
 # ENV["COLORSCHEME"]  = "JuliaDynamicsLight" # change this to test
-TEST_NEW_THEME = false
-COLORSCHEME = COLORSCHEMES[get(ENV, "COLORSCHEME", "JuliaDynamics")]
-BGCOLOR = get(ENV, "BGCOLOR", :transparent)
-AXISCOLOR = get(ENV, "AXISCOLOR", :black)
 
 mutable struct CyclicContainer{V} <: AbstractVector{V}
     c::Vector{V}
@@ -77,8 +72,6 @@ function Base.getindex(c::CyclicContainer)
     c[c.n]
 end
 
-COLORS = CyclicContainer(COLORSCHEME)
-
 ########################################################################################
 # Set Makie theme
 ########################################################################################
@@ -92,63 +85,75 @@ cycle = Cycle([:color, :marker], covary = true)
 _FONTSIZE = 16
 _LABELSIZE = 20
 
-DEFAULT_THEME = Makie.Theme(
-    # Main theme (colors, markers, etc.)
-    backgroundcolor = BGCOLOR,
-    palette = (
-        color = COLORSCHEME,
-        marker = MARKERS,
-        linestyle = LINESTYLES,
-        patchcolor = COLORSCHEME,
-    ),
-    linewidth = 3.0,
-    # Sizes of figure and font
-    Figure = (
-        size = (1000, 600),
-        figure_padding = 20,
-    ),
-    fontsize = _FONTSIZE,
-    Axis = (
-        xlabelsize = _LABELSIZE,
-        ylabelsize = _LABELSIZE,
-        titlesize = _LABELSIZE,
+
+function __init__()
+
+    COLORSCHEME = COLORSCHEMES[get(ENV, "COLORSCHEME", "JuliaDynamics")]
+    BGCOLOR = get(ENV, "BGCOLOR", :transparent)
+    AXISCOLOR = get(ENV, "AXISCOLOR", :black)
+    global COLORS = CyclicContainer(COLORSCHEME)
+
+    DEFAULT_THEME = Makie.Theme(
+        # Main theme (colors, markers, etc.)
         backgroundcolor = BGCOLOR,
-        xgridcolor = AXISCOLOR,
-        ygridcolor = AXISCOLOR,
-        xtickcolor = AXISCOLOR,
-        ytickcolor = AXISCOLOR,
-        bottomspinecolor = AXISCOLOR,
-        topspinecolor = AXISCOLOR,
-        leftspinecolor = AXISCOLOR,
-        rightspinecolor = AXISCOLOR,
-        xlabelcolor = AXISCOLOR,
-        ylabelcolor = AXISCOLOR,
-        yticklabelcolor = AXISCOLOR,
-        xticklabelcolor = AXISCOLOR,
-        titlecolor = AXISCOLOR,
-    ),
-    Legend = (
-        patchsize = (40f0, 20),
-    ),
-    Colorbar = (
-        gridcolor = AXISCOLOR,
-        tickcolor = AXISCOLOR,
-        bottomspinecolor = AXISCOLOR,
-        topspinecolor = AXISCOLOR,
-        leftspinecolor = AXISCOLOR,
-        rightspinecolor = AXISCOLOR,
-        labelcolor = AXISCOLOR,
-        ticklabelcolor = AXISCOLOR,
-        titlecolor = AXISCOLOR,
-    ),
-    # This command makes the cycle of color and marker
-    # co-vary at the same time in plots that use markers
-    ScatterLines = (cycle = cycle, markersize = 5),
-    Scatter = (cycle = cycle, markersize = 15),
-    Band = (cycle = :color,),
-    Lines = (cycle = Cycle([:color, :linestyle], covary = true),),
-    Label = (textsize = _LABELSIZE,)
-)
+        palette = (
+            color = COLORSCHEME,
+            marker = MARKERS,
+            linestyle = LINESTYLES,
+            patchcolor = COLORSCHEME,
+        ),
+        linewidth = 3.0,
+        # Sizes of figure and font
+        Figure = (
+            size = (1000, 600),
+            figure_padding = 20,
+        ),
+        fontsize = _FONTSIZE,
+        Axis = (
+            xlabelsize = _LABELSIZE,
+            ylabelsize = _LABELSIZE,
+            titlesize = _LABELSIZE,
+            backgroundcolor = BGCOLOR,
+            xgridcolor = AXISCOLOR,
+            ygridcolor = AXISCOLOR,
+            xtickcolor = AXISCOLOR,
+            ytickcolor = AXISCOLOR,
+            bottomspinecolor = AXISCOLOR,
+            topspinecolor = AXISCOLOR,
+            leftspinecolor = AXISCOLOR,
+            rightspinecolor = AXISCOLOR,
+            xlabelcolor = AXISCOLOR,
+            ylabelcolor = AXISCOLOR,
+            yticklabelcolor = AXISCOLOR,
+            xticklabelcolor = AXISCOLOR,
+            titlecolor = AXISCOLOR,
+        ),
+        Legend = (
+            patchsize = (40f0, 20),
+        ),
+        Colorbar = (
+            gridcolor = AXISCOLOR,
+            tickcolor = AXISCOLOR,
+            bottomspinecolor = AXISCOLOR,
+            topspinecolor = AXISCOLOR,
+            leftspinecolor = AXISCOLOR,
+            rightspinecolor = AXISCOLOR,
+            labelcolor = AXISCOLOR,
+            ticklabelcolor = AXISCOLOR,
+            titlecolor = AXISCOLOR,
+        ),
+        # This command makes the cycle of color and marker
+        # co-vary at the same time in plots that use markers
+        ScatterLines = (cycle = cycle, markersize = 5),
+        Scatter = (cycle = cycle, markersize = 15),
+        Band = (cycle = :color,),
+        Lines = (cycle = Cycle([:color, :linestyle], covary = true),),
+        Label = (textsize = _LABELSIZE,)
+    )
+
+    set_theme!(DEFAULT_THEME)
+    return COLORS
+end
 
 # Testing style (colorscheme)
 using Random

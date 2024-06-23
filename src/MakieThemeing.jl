@@ -11,8 +11,4 @@ include("themes.jl")
 include("convenience.jl")
 include("drwatson.jl")
 
-function __init__()
-    set_theme!(DEFAULT_THEME)
-end
-
 end # module MakieTheme
