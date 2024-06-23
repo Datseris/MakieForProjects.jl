@@ -10,12 +10,16 @@ and the internal function `test_new_theme()`.
 ## Usage
 
 Simply add the repo url via `Pkg.add`.
-Altering themeing properties is done via environment variables before using the module, eg
+Altering themeing properties is done via environment variables before using the module, while you can adjust theme aspects after loading, like so:
 
 ```julia
-ENV["COLORSCHEME"] = "JuliaDynamics" # or others, see `plottheme.jl`
-ENV["BGCOLOR"] = :transparent       # anything for `backgroundcolor` of Makie
-ENV["AXISCOLOR"] = :black           # color of all axis elements (labels, spines, ticks)
+ENV["COLORSCHEME"] = "JuliaDynamics" # or others, see `src/themes.jl`
+ENV["BGCOLOR"] = :transparent        # anything for `backgroundcolor` of Makie
+ENV["AXISCOLOR"] = :black            # color of all axis elements (labels, spines, ticks)
 
 using MakieThemeing
+
+Makie.update_theme!(;
+    # size = (figwidth, figheight),
+)
 ```
