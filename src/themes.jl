@@ -130,6 +130,10 @@ function __init__()
         ),
         Legend = (
             patchsize = (40f0, 20),
+            backgroundcolor = BGCOLOR,
+            labelcolor = AXISCOLOR,
+            titlecolor = AXISCOLOR,
+            framecolor = AXISCOLOR,
         ),
         Colorbar = (
             gridcolor = AXISCOLOR,
