@@ -151,7 +151,10 @@ function __init__()
         ScatterLines = (cycle = cycle, markersize = 5),
         Scatter = (cycle = cycle, markersize = 15),
         Band = (cycle = :color,),
-        Lines = (cycle = Cycle([:color, :linestyle], covary = true),),
+        Lines = (
+            cycle = Cycle([:color, :linestyle], covary = true),
+            joinstyle = :round, linecap = :round,
+        ),
         Label = (textsize = _LABELSIZE,)
     )
 
