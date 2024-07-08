@@ -9,7 +9,7 @@ end
 """
     negate_remove_bg(file; threshold = 0.02, bg = :white, overwrite = false)
 
-Create an negated version of the image at `file` with background removed,
+Create an negated (or color inverted) version of the image at `file` with background removed,
 so that it may be used in environments with dark background.
 The `threshold` decides when a pixel should be made transparent.
 If the image already has a dark background, pass `bg = :black` instead,
