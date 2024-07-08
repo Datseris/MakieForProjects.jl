@@ -85,6 +85,13 @@ cycle = Cycle([:color, :marker], covary = true)
 _FONTSIZE = 16
 _LABELSIZE = 20
 
+"""
+    make_theme(colors, bgcolor, axiscolor)
+
+Create a `Makie.Theme` with a specific sizing and cycling, while
+themeing the color cycle, the color of the background, and the color
+of all axis elements.
+"""
 function make_theme(COLORSCHEME, BGCOLOR, AXISCOLOR)
     theme = Makie.Theme(
         # Main theme (colors, markers, etc.)
