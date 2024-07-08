@@ -11,32 +11,7 @@ of color blindness, and are distingushable also in greyscale (brightness).
 In our experience, all color schemes here are more distinguishable from Makie's
 default color scheme, and more aesthetically pleasing as well.
 
-## Usage
-
-Simply add the repo via `Pkg.add`.
-When `using MakieThemeing`, a default theme is applied that changes
-most theme aspects, and in particular the cycling of colors, markers, and lines.
-
-Color themeing can be controlled in two ways. One, is by setting environment
-three environment variables before using the module:
-
-```julia
-ENV["COLORSCHEME"] = "JuliaDynamics" # or others, see docs
-ENV["BGCOLOR"] = :transparent        # anything for `backgroundcolor` of Makie
-ENV["AXISCOLOR"] = :black            # color of all axis elements (labels, spines, ticks)
-
-using MakieThemeing
-
-Makie.update_theme!(;
-    # size = (figwidth, figheight),
-)
-```
-
-The second way is to do
-```julia
-using MakieThemeing
-theme = MakieThemeing.make_theme(colorcycle, bgcolor, axiscolor)
-Makie.set_theme!(theme)
-```
+Besides themeing, this package also provides several convenience functions
+for accelerating writing code for a "paper figure". Highlight is the `axesgrid` function.
 
 for all other information, see the online docs:
