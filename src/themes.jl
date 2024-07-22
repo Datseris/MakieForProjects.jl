@@ -91,6 +91,10 @@ _LABELSIZE = 20
 Create a `Makie.Theme` with a specific sizing and cycling, while
 themeing the color cycle, the color of the background, and the color
 of all axis elements.
+
+    make_theme()
+
+Use the environment variables and call the method above.
 """
 function make_theme(COLORSCHEME, BGCOLOR, AXISCOLOR)
     theme = Makie.Theme(
@@ -161,13 +165,17 @@ function make_theme(COLORSCHEME, BGCOLOR, AXISCOLOR)
     return theme
 end
 
-
-function __init__()
+function make_theme()
     COLORSCHEME = COLORSCHEMES[get(ENV, "COLORSCHEME", "JuliaDynamics")]
     BGCOLOR = get(ENV, "BGCOLOR", :transparent)
     AXISCOLOR = get(ENV, "AXISCOLOR", :black)
-    global COLORS = CyclicContainer(COLORSCHEME)
-    theme = make_theme(COLORS, BGCOLOR, AXISCOLOR)
+    theme = make_theme(COLORSCHEME, BGCOLOR, AXISCOLOR)
+    return theme
+end
+
+function __init__()
+    theme = make_theme()
+    global COLORS = CyclicContainer(COLORSCHEMES[get(ENV, "COLORSCHEME", "JuliaDynamics")])
     set_theme!(theme)
     return
 end
