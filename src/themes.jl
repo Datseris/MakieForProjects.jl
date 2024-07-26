@@ -85,15 +85,19 @@ cycle = Cycle([:color, :marker], covary = true)
 _FONTSIZE = 16
 _LABELSIZE = 20
 
+"""
+    make_theme(colors, bgcolor, axiscolor)
 
-function __init__()
+Create a `Makie.Theme` with a specific sizing and cycling, while
+themeing the color cycle, the color of the background, and the color
+of all axis elements.
 
-    COLORSCHEME = COLORSCHEMES[get(ENV, "COLORSCHEME", "JuliaDynamics")]
-    BGCOLOR = get(ENV, "BGCOLOR", :transparent)
-    AXISCOLOR = get(ENV, "AXISCOLOR", :black)
-    global COLORS = CyclicContainer(COLORSCHEME)
+    make_theme()
 
-    DEFAULT_THEME = Makie.Theme(
+Use the environment variables and call the method above.
+"""
+function make_theme(COLORSCHEME, BGCOLOR, AXISCOLOR)
+    theme = Makie.Theme(
         # Main theme (colors, markers, etc.)
         backgroundcolor = BGCOLOR,
         palette = (
@@ -158,16 +162,42 @@ function __init__()
         Label = (textsize = _LABELSIZE,)
     )
 
-    set_theme!(DEFAULT_THEME)
-    return COLORS
+    return theme
+end
+
+function make_theme()
+    COLORSCHEME = COLORSCHEMES[get(ENV, "COLORSCHEME", "JuliaDynamics")]
+    BGCOLOR = get(ENV, "BGCOLOR", :transparent)
+    AXISCOLOR = get(ENV, "AXISCOLOR", :black)
+    theme = make_theme(COLORSCHEME, BGCOLOR, AXISCOLOR)
+    return theme
+end
+
+function __init__()
+    theme = make_theme()
+    global COLORS = CyclicContainer(COLORSCHEMES[get(ENV, "COLORSCHEME", "JuliaDynamics")])
+    set_theme!(theme)
+    return
 end
 
 # Testing style (colorscheme)
 using Random
 
-function test_new_theme()
-    # See also this website to see how the colorscheme looks for colorblind
-    # https://davidmathlogic.com/colorblind
+"""
+    testcolorscheme(theme::String)
+    testcolorscheme(colors::Vector)
+
+Return a figure with exemplary usage of a colorscheme.
+See also this website to see how the colorscheme looks for colorblind
+https://davidmathlogic.com/colorblind
+"""
+function testcolorscheme(theme::String)
+    fig = testcolorscheme(COLORSCHEMES[theme])
+    figuretitle!(fig, theme)
+    return fig
+end
+
+function testcolorscheme(COLORS)
     fig = Figure(size = (900, 600)) # show colors
     ax6 = Axis(fig[2,3])
     ax5 = Axis(fig[2,2])
@@ -192,5 +222,5 @@ function test_new_theme()
         barplot!(ax5, barpos[collect(1:4) .+ (i-1)*4], 0.5rand(4) .+ 0.5; width = 1, gap=0,color=c)
         scatterlines!(ax6, rand(3), rand(3); linewidth = 4, markersize = 30, color=c)
     end
-    display(fig)
+    return fig
 end

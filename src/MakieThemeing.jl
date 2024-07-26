@@ -1,12 +1,20 @@
 module MakieThemeing
 
+# Use the README as the module docs
+@doc let
+    path = joinpath(dirname(@__DIR__), "README.md")
+    include_dependency(path)
+    read(path, String)
+end MakieThemeing
+
 using Makie
 
 export COLORSCHEME, COLORS, MARKERS, LINESTYLES, DEFAULT_THEME
-export figuretitle!, axesgrid, subplotgrid
+export figuretitle!, axesgrid, testcolorscheme
 export label_axes!, space_out_legend!, textbox!
 export lighten, invert_luminance
-export Makie
+export Makie, testcolortheem
+export negate_remove_bg, remove_bg
 
 include("themes.jl")
 include("convenience.jl")
