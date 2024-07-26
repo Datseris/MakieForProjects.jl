@@ -33,15 +33,18 @@ theme = MakieThemeing.make_theme(colorcycle, bgcolor, axiscolor)
 Makie.set_theme!(theme)
 ```
 
+And `make_theme` can also be called without arguments, in which case it
+uses the same environmental parameters.
+
 ## Axes grid
 
 ```@docs
 axesgrid
 ```
 
-## Other plotting convenience functions
+## Labelling functions
 
-```
+```@docs
 figuretitle!
 label_axes!
 space_out_legend!
@@ -52,35 +55,35 @@ textbox!
 
 ```@docs
 lighten
-invert_liminance
+invert_luminance
 ```
 
 ## Color schemes
 
 
-```@example
+```@example MAIN
 using CairoMakie, MakieThemeing
 
 testcolorscheme("JuliaDynamics")
 ```
 
-```@example
+```@example MAIN
 testcolorscheme("JuliaDynamicsLight")
 ```
 
-```@example
+```@example MAIN
 testcolorscheme("Petrol")
 ```
 
-```@example
+```@example MAIN
 testcolorscheme("CloudySky")
 ```
 
-```@example
+```@example MAIN
 testcolorscheme("Flames")
 ```
 
-```@example
+```@example MAIN
 testcolorscheme("GreenMetal")
 ```
 
@@ -89,15 +92,15 @@ testcolorscheme("GreenMetal")
 Marker and linestyle cycles are added into themeing.
 The following constants are exported. The type `CyclicContainer` is a `Vector`-like that implements modulo indexing, wrapping around the indices after the length of the contained elements has been exhausted.
 
-```@example
+```@example MAIN
 COLORS
 ```
 
-```@example
+```@example MAIN
 MARKERS
 ```
 
-```@example
+```@example MAIN
 LINESTYLES
 ```
 

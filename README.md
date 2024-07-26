@@ -5,13 +5,13 @@ You are more than welcomed to use this to benefit from the color themes,
 or the convenience functions within. Feel free to contribute PRs adding your own themes or more convenience functions.
 
 The color themes in this repo are all composed of 6 colors.
-They have been created through extensive testing, so that their colors are most distinguishable with eaceh other,
+They have been created through extensive testing, so that their colors are most distinguishable with each other,
 visually aesthetic and thematic, are most distinguishable across all three major classes
-of color blindness, and are distingushable also in greyscale (brightness).
+of color blindness, and are distinguishable also in greyscale (brightness).
 In our experience, all color schemes here are more distinguishable from Makie's
 default color scheme, and more aesthetically pleasing as well.
 
 Besides themeing, this package also provides several convenience functions
-for accelerating writing code for a "paper figure". Highlight is the `axesgrid` function.
+for accelerating writing code for a "paper figure". Highlight is the `axesgrid`, `figuretitle!` and `label_axes!` functions.
 
 for all other information, see the online docs:
