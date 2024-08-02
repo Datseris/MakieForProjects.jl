@@ -4,4 +4,4 @@ pages = ["MakieThemeing" => "index.md"]
 makedocs(; pages, modules = [MakieThemeing], warnonly = :missing_docs,
     sitename = "MakieThemeing.jl",
 )
-deploydocs(repo = "github.com/Datseris/MakieThemeing.git")
+deploydocs(repo = "github.com/Datseris/MakieThemeing.jl.git")
