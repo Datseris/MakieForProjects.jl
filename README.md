@@ -14,4 +14,4 @@ for accelerating writing code for creating a figure in a (typically academic) pr
 Highlight is the `axesgrid`, `figuretitle!` and `label_axes!` functions.
 MakieForProjects.jl also integrates with DrWatson and overloads `wsave` for `Makie.Figure` objects.
 
-for all other information, see the online docs.
+For all other information, see the online docs.
