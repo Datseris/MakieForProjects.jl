@@ -1,26 +1,30 @@
 ```@docs
-MakieThemeing
+MakieForProjects
 ```
 
 ```@index
 ```
 
-## Usage
+## Themeing
 
-Simply add the repo via `Pkg.add`.
-When `using MakieThemeing`, a default theme is applied that changes
+When `using MakieForProjects`, a default theme is applied that changes
 most theme aspects, and in particular the cycling of colors, markers, and lines.
+It makes fontsizes relatively larger (for the set figure size) which is typically
+desirable in both papers and presentations. To see all aspects that are changed
+see the source code of the `MakieForProjects.make_theme` function.
 
-Color themeing can be controlled in two ways. One, is by setting environment
+The color of the theme can be controlled in two ways. One, is by setting environment
 three environment variables before using the module:
 
 ```julia
+# These are the default values
 ENV["COLORSCHEME"] = "JuliaDynamics" # or others, see docs
 ENV["BGCOLOR"] = :transparent        # anything for `backgroundcolor` of Makie
 ENV["AXISCOLOR"] = :black            # color of all axis elements (labels, spines, ticks)
 
-using MakieThemeing
+using MakieForProjects # this has now set the theme already!
 
+# you may further edit the set theme by using
 Makie.update_theme!(;
     # size = (figwidth, figheight),
 )
@@ -28,41 +32,47 @@ Makie.update_theme!(;
 
 The second way is to do
 ```julia
-using MakieThemeing
-theme = MakieThemeing.make_theme(colorcycle, bgcolor, axiscolor)
+using MakieForProjects
+theme = MakieForProjects.make_theme(colorcycle, bgcolor, axiscolor)
 Makie.set_theme!(theme)
 ```
 
 And `make_theme` can also be called without arguments, in which case it
 uses the same environmental parameters.
 
-## Axes grid
+## Themes
 
-```@docs
-axesgrid
-```
+Themeing in MakieForProjects.jl aims to maximize clarity and aesthetics.
 
-## Labelling functions
+The color schemes in this repo are all composed of 6 colors. Max 6 because if you need more than 6 colors in your figure, you probably need to distinguish data with aspects other than color if you want clarity.
 
-```@docs
-figuretitle!
-label_axes!
-space_out_legend!
-textbox!
-```
+The color schemes have been created through extensive testing, so that their colors are most distinguishable with each other,
+visually aesthetic and thematic, are most distinguishable across all three major classes
+of color blindness, and are distinguishable also in greyscale (brightness).
 
-## Color manipulation
+Marker and linestyle cycles are added into themeing so that sequential scatter plots
+or line plots have different attributes that distinguish them beyond color.
 
-```@docs
-lighten
-invert_luminance
-```
-
-## Color schemes
-
+The following constants are exported. The type `CyclicContainer` is a `Vector`-like that implements modulo indexing, wrapping around the indices after the length of the contained elements has been exhausted.
 
 ```@example MAIN
-using CairoMakie, MakieThemeing
+using MakieForProjects
+
+COLORS
+```
+
+```@example MAIN
+MARKERS
+```
+
+```@example MAIN
+LINESTYLES
+```
+
+## Available color schemes
+
+```@example MAIN
+using CairoMakie, MakieForProjects
 
 testcolorscheme("JuliaDynamics")
 ```
@@ -87,27 +97,34 @@ testcolorscheme("Flames")
 testcolorscheme("GreenMetal")
 ```
 
-## Other themeing
+## Color manipulation
 
-Marker and linestyle cycles are added into themeing.
-The following constants are exported. The type `CyclicContainer` is a `Vector`-like that implements modulo indexing, wrapping around the indices after the length of the contained elements has been exhausted.
-
-```@example MAIN
-COLORS
+```@docs
+lighten
+invert_luminance
 ```
 
-```@example MAIN
-MARKERS
+## Convenience functions
+
+## Axes grid
+
+```@docs
+axesgrid
 ```
 
-```@example MAIN
-LINESTYLES
+## Labelling functions
+
+```@docs
+figuretitle!
+label_axes!
+space_out_legend!
+textbox!
 ```
 
 ## Image file manipulation
 
-Besides the functions below, `MakieThemeing` also overloads `DrWatson._wsave`,
-so that `wsave` works for `Figure`. By default it increments `px_per_unit = 2`.
+Besides the functions below, `MakieForProjects` also overloads `DrWatson._wsave`,
+so that `wsave` works for `Figure`. By default it increments `px_per_unit = 2` as well.
 
 ```@docs
 negate_remove_bg

@@ -1,11 +1,11 @@
-module MakieThemeing
+module MakieForProjects
 
 # Use the README as the module docs
 @doc let
     path = joinpath(dirname(@__DIR__), "README.md")
     include_dependency(path)
     read(path, String)
-end MakieThemeing
+end MakieForProjects
 
 using Makie
 

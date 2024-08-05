@@ -75,7 +75,6 @@ end
 ########################################################################################
 # Set Makie theme
 ########################################################################################
-# The rest require `Makie` accessible in global scope
 MARKERS = CyclicContainer([:circle, :dtriangle, :rect, :star5, :xcross, :diamond])
 # Linestyles implement a better dash-dot than the original default (too much whitespace)
 # and a second dashed style with longer lines between dashes
@@ -90,11 +89,13 @@ _LABELSIZE = 20
 
 Create a `Makie.Theme` with a specific sizing and cycling, while
 themeing the color cycle, the color of the background, and the color
-of all axis elements.
+of all axis elements. `colors` can also be a string which will choose
+one of the existing color schemes.
 
     make_theme()
 
-Use the environment variables and call the method above.
+Use the environment variables `ENV["COLORSCHEME"], ENV["BGCOLOR"], ENV["AXISCOLOR"]`
+and call the method above.
 """
 function make_theme(COLORSCHEME, BGCOLOR, AXISCOLOR)
     theme = Makie.Theme(
@@ -162,6 +163,12 @@ function make_theme(COLORSCHEME, BGCOLOR, AXISCOLOR)
         Label = (textsize = _LABELSIZE,)
     )
 
+    return theme
+end
+
+function make_theme(scheme::String, bgcolor, axcolor)
+    COLORSCHEME = COLORSCHEMES[get(ENV, "COLORSCHEME", "JuliaDynamics")]
+    theme = make_theme(COLORSCHEME, bgcolor, axcolor)
     return theme
 end
 

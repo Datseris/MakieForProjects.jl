@@ -1,7 +1,7 @@
 cd(@__DIR__)
-using Documenter, MakieThemeing
-pages = ["MakieThemeing" => "index.md"]
-makedocs(; pages, modules = [MakieThemeing], warnonly = :missing_docs,
-    sitename = "MakieThemeing.jl",
+using Documenter, MakieForProjects
+pages = ["MakieForProjects" => "index.md"]
+makedocs(; pages, modules = [MakieForProjects], warnonly = :missing_docs,
+    sitename = "MakieForProjects.jl",
 )
-deploydocs(repo = "github.com/Datseris/MakieThemeing.jl.git")
+deploydocs(repo = "github.com/Datseris/MakieForProjects.jl.git")
