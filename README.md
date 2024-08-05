@@ -10,7 +10,8 @@ or the convenience functions within.
 Feel free to contribute PRs adding your own themes or more convenience functions.
 
 Besides themeing, this package also provides several convenience functions
-for accelerating writing code for a "paper figure". Highlight is the `axesgrid`, `figuretitle!` and `label_axes!` functions.
-It also integrates with DrWatson and overloads `wsave` for `Makie.Figure` objects.
+for accelerating writing code for creating a figure in a (typically academic) project.
+Highlight is the `axesgrid`, `figuretitle!` and `label_axes!` functions.
+MakieForProjects.jl also integrates with DrWatson and overloads `wsave` for `Makie.Figure` objects.
 
 for all other information, see the online docs.
