@@ -5,9 +5,8 @@ MakieThemeing
 ```@index
 ```
 
-## Usage
+## Themeing
 
-Simply add the repo via `Pkg.add`.
 When `using MakieThemeing`, a default theme is applied that changes
 most theme aspects, and in particular the cycling of colors, markers, and lines.
 
@@ -36,30 +35,34 @@ Makie.set_theme!(theme)
 And `make_theme` can also be called without arguments, in which case it
 uses the same environmental parameters.
 
-## Axes grid
+## Themes
 
-```@docs
-axesgrid
+Themeing in MakieThemeing.jl aims to maximize clarity and aesthetics.
+
+The color schemes in this repo are all composed of 6 colors. Max 6 because if you need more than 6 colors in your figure, you probably need to distinguish data with aspects other than color if you want clarity.
+
+The color schemes have been created through extensive testing, so that their colors are most distinguishable with each other,
+visually aesthetic and thematic, are most distinguishable across all three major classes
+of color blindness, and are distinguishable also in greyscale (brightness).
+
+Marker and linestyle cycles are added into themeing so that sequential scatter plots
+or line plots have different attributes that distinguish them beyond color.
+
+The following constants are exported. The type `CyclicContainer` is a `Vector`-like that implements modulo indexing, wrapping around the indices after the length of the contained elements has been exhausted.
+
+```@example MAIN
+COLORS
 ```
 
-## Labelling functions
-
-```@docs
-figuretitle!
-label_axes!
-space_out_legend!
-textbox!
+```@example MAIN
+MARKERS
 ```
 
-## Color manipulation
-
-```@docs
-lighten
-invert_luminance
+```@example MAIN
+LINESTYLES
 ```
 
-## Color schemes
-
+## Available color schemes
 
 ```@example MAIN
 using CairoMakie, MakieThemeing
@@ -87,21 +90,28 @@ testcolorscheme("Flames")
 testcolorscheme("GreenMetal")
 ```
 
-## Other themeing
+## Color manipulation
 
-Marker and linestyle cycles are added into themeing.
-The following constants are exported. The type `CyclicContainer` is a `Vector`-like that implements modulo indexing, wrapping around the indices after the length of the contained elements has been exhausted.
-
-```@example MAIN
-COLORS
+```@docs
+lighten
+invert_luminance
 ```
 
-```@example MAIN
-MARKERS
+## Convenience functions
+
+## Axes grid
+
+```@docs
+axesgrid
 ```
 
-```@example MAIN
-LINESTYLES
+## Labelling functions
+
+```@docs
+figuretitle!
+label_axes!
+space_out_legend!
+textbox!
 ```
 
 ## Image file manipulation

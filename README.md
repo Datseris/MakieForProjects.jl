@@ -1,17 +1,15 @@
 # MakieThemeing.jl
 
-Theming and convenience tools for plotting with Makie.jl developed to be particularly helpful in academic work, in particular for making figures for papers.
-You are more than welcomed to use this to benefit from the color themes,
-or the convenience functions within. Feel free to contribute PRs adding your own themes or more convenience functions.
+MakieThemeing.jl has two purposes:
 
-The color themes in this repo are all composed of 6 colors.
-They have been created through extensive testing, so that their colors are most distinguishable with each other,
-visually aesthetic and thematic, are most distinguishable across all three major classes
-of color blindness, and are distinguishable also in greyscale (brightness).
-In our experience, all color schemes here are more distinguishable from Makie's
-default color scheme, and more aesthetically pleasing as well.
+1. Increase productivity when creating figures for (typically academic) papers or presentations
+2. Provide beautiful themes that maximize clarity.
+
+You are more than welcomed to use this to benefit from the themes,
+or the convenience functions within.
+Feel free to contribute PRs adding your own themes or more convenience functions.
 
 Besides themeing, this package also provides several convenience functions
 for accelerating writing code for a "paper figure". Highlight is the `axesgrid`, `figuretitle!` and `label_axes!` functions.
 
-for all other information, see the online docs:
+for all other information, see the online docs.
