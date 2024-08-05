@@ -9,8 +9,11 @@ MakieForProjects
 
 When `using MakieForProjects`, a default theme is applied that changes
 most theme aspects, and in particular the cycling of colors, markers, and lines.
+It makes fontsizes relatively larger (for the set figure size) which is typically
+desirable in both papers and presentations. To see all aspects that are changed
+see the source code of the `MakieForProjects.make_theme` function.
 
-Color themeing can be controlled in two ways. One, is by setting environment
+The color of the theme can be controlled in two ways. One, is by setting environment
 three environment variables before using the module:
 
 ```julia
@@ -121,7 +124,7 @@ textbox!
 ## Image file manipulation
 
 Besides the functions below, `MakieForProjects` also overloads `DrWatson._wsave`,
-so that `wsave` works for `Figure`. By default it increments `px_per_unit = 2`.
+so that `wsave` works for `Figure`. By default it increments `px_per_unit = 2` as well.
 
 ```@docs
 negate_remove_bg

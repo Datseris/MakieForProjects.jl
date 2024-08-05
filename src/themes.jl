@@ -75,7 +75,6 @@ end
 ########################################################################################
 # Set Makie theme
 ########################################################################################
-# The rest require `Makie` accessible in global scope
 MARKERS = CyclicContainer([:circle, :dtriangle, :rect, :star5, :xcross, :diamond])
 # Linestyles implement a better dash-dot than the original default (too much whitespace)
 # and a second dashed style with longer lines between dashes
