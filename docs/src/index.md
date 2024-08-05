@@ -1,5 +1,5 @@
 ```@docs
-MakieThemeing
+MakieForProjects
 ```
 
 ```@index
@@ -7,7 +7,7 @@ MakieThemeing
 
 ## Themeing
 
-When `using MakieThemeing`, a default theme is applied that changes
+When `using MakieForProjects`, a default theme is applied that changes
 most theme aspects, and in particular the cycling of colors, markers, and lines.
 
 Color themeing can be controlled in two ways. One, is by setting environment
@@ -18,7 +18,7 @@ ENV["COLORSCHEME"] = "JuliaDynamics" # or others, see docs
 ENV["BGCOLOR"] = :transparent        # anything for `backgroundcolor` of Makie
 ENV["AXISCOLOR"] = :black            # color of all axis elements (labels, spines, ticks)
 
-using MakieThemeing
+using MakieForProjects
 
 Makie.update_theme!(;
     # size = (figwidth, figheight),
@@ -27,8 +27,8 @@ Makie.update_theme!(;
 
 The second way is to do
 ```julia
-using MakieThemeing
-theme = MakieThemeing.make_theme(colorcycle, bgcolor, axiscolor)
+using MakieForProjects
+theme = MakieForProjects.make_theme(colorcycle, bgcolor, axiscolor)
 Makie.set_theme!(theme)
 ```
 
@@ -51,7 +51,7 @@ or line plots have different attributes that distinguish them beyond color.
 The following constants are exported. The type `CyclicContainer` is a `Vector`-like that implements modulo indexing, wrapping around the indices after the length of the contained elements has been exhausted.
 
 ```@example MAIN
-using MakieThemeing
+using MakieForProjects
 
 COLORS
 ```
@@ -67,7 +67,7 @@ LINESTYLES
 ## Available color schemes
 
 ```@example MAIN
-using CairoMakie, MakieThemeing
+using CairoMakie, MakieForProjects
 
 testcolorscheme("JuliaDynamics")
 ```
@@ -118,7 +118,7 @@ textbox!
 
 ## Image file manipulation
 
-Besides the functions below, `MakieThemeing` also overloads `DrWatson._wsave`,
+Besides the functions below, `MakieForProjects` also overloads `DrWatson._wsave`,
 so that `wsave` works for `Figure`. By default it increments `px_per_unit = 2`.
 
 ```@docs
