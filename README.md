@@ -3,7 +3,7 @@
 MakieForProjects.jl has two purposes:
 
 1. Increase productivity when creating figures for (typically academic) papers or presentations within a self-contained project.
-2. Provide beautiful themes that maximize clarity. Different themes can be used for different projects.
+2. Provide beautiful themes that maximize clarity. Different themes can be used for different projects and one can easily switch between light and dark background themes.
 
 You are more than welcomed to use this to benefit from the themes,
 or the convenience functions within.
