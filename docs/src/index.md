@@ -14,12 +14,14 @@ Color themeing can be controlled in two ways. One, is by setting environment
 three environment variables before using the module:
 
 ```julia
+# These are the default values
 ENV["COLORSCHEME"] = "JuliaDynamics" # or others, see docs
 ENV["BGCOLOR"] = :transparent        # anything for `backgroundcolor` of Makie
 ENV["AXISCOLOR"] = :black            # color of all axis elements (labels, spines, ticks)
 
-using MakieForProjects
+using MakieForProjects # this has now set the theme already!
 
+# you may further edit the set theme by using
 Makie.update_theme!(;
     # size = (figwidth, figheight),
 )
