@@ -1,6 +1,6 @@
-# MakieThemeing.jl
+# MakieForProjects.jl
 
-MakieThemeing.jl has two purposes:
+MakieForProjects.jl has two purposes:
 
 1. Increase productivity when creating figures for (typically academic) papers or presentations
 2. Provide beautiful themes that maximize clarity.

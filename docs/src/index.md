@@ -37,7 +37,7 @@ uses the same environmental parameters.
 
 ## Themes
 
-Themeing in MakieThemeing.jl aims to maximize clarity and aesthetics.
+Themeing in MakieForProjects.jl aims to maximize clarity and aesthetics.
 
 The color schemes in this repo are all composed of 6 colors. Max 6 because if you need more than 6 colors in your figure, you probably need to distinguish data with aspects other than color if you want clarity.
 
