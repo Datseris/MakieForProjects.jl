@@ -51,6 +51,8 @@ or line plots have different attributes that distinguish them beyond color.
 The following constants are exported. The type `CyclicContainer` is a `Vector`-like that implements modulo indexing, wrapping around the indices after the length of the contained elements has been exhausted.
 
 ```@example MAIN
+using MakieThemeing
+
 COLORS
 ```
 
