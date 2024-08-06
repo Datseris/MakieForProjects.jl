@@ -39,11 +39,13 @@ and return the figure and the `Matrix` of axis.
   leftmost column. Can also be a single `String`, in which case it is used for all axes.
 - `title::String`: if given, it is used as super-title for the entire figure
   using the `figuretitle!` function.
+- `xlims/ylims`: if given, they set the limits of x/y for **all** axes.
 - `kwargs...`: all further keywords are propagated to `Figure`.
 """
 function axesgrid(m, n;
         sharex = false, sharey = false, titles = nothing,
-        xlabels = nothing, ylabels = nothing, title = nothing, kwargs...
+        xlabels = nothing, ylabels = nothing, title = nothing,
+        xlims = nothing, ylims = nothing, kwargs...
     )
     fig = Makie.Figure(; kwargs...)
     axs = Matrix{Axis}(undef, m, n)
@@ -78,6 +80,12 @@ function axesgrid(m, n;
         for i in 1:m
             axs[i, 1].ylabel = ylabels isa MakieText ? ylabels : ylabels[i]
         end
+    end
+    if !isnothing(xlims)
+        for ax in axs; xlims!(ax, xlims); end
+    end
+    if !isnothing(ylims)
+        for ax in axs; ylims!(ax, ylims); end
     end
     !isnothing(title) && figuretitle!(fig, title)
     return fig, axs
