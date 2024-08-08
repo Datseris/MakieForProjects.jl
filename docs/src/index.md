@@ -102,6 +102,7 @@ testcolorscheme("GreenMetal")
 ```@docs
 lighten
 invert_luminance
+fadecolor
 ```
 
 ## Convenience functions
