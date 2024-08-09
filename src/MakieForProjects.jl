@@ -17,6 +17,7 @@ export Makie, testcolortheem
 export negate_remove_bg, remove_bg
 
 include("themes.jl")
+include("colormanip.jl")
 include("convenience.jl")
 include("drwatson.jl")
 
