@@ -34,8 +34,15 @@ end
 Create a vector of `N` colors based on `c` but that "fade away" towards
 full transparency. The alpha channel (transparency) scales as `t^fade` with `t`
 ranging from 0 to 1 (1 being the end of the returned color vector).
-Use `fade = 1.0` for linear fading or `fade = 0` for no fading. Current default
+Use `fade = 1` for linear fading or `fade = 0` for no fading. Current default
 makes fading progress faster at start and slower towards the end.
+
+Note: due to how makie handles transparency and different colors in a single
+line segment, if using `fadecolor` with `lines!` plots, it is best
+to also use the keywords:
+```
+linecap = :butt, joinstyle = :round
+```
 """
 function fadecolor(c, N::Int, f = 0.5)
     fade = Float32(f)
