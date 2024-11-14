@@ -8,7 +8,7 @@ COLORSCHEMES = Dict(
         "#191E44",
         "#0A9A84",
         "#AF9327",
-        "#791457",
+        "#AB0E41",
         "#6C768C",
     ],
     "JuliaDynamicsLight" => [ # for usage with dark background
