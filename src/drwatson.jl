@@ -1,8 +1,13 @@
 using DrWatson
 
 # Extension of DrWatson's save functionality for default CairoMakie saving
-function DrWatson._wsave(filename, fig::Makie.Figure, args...; kwargs...)
-    Makie.save(filename, fig, args...; px_per_unit = 2, kwargs...)
+function DrWatson._wsave(fullpath, fig::Makie.Figure, args...; kwargs...)
+    path = dirname(fullpath)
+    filename = basename(fullpath)
+    if '.' ∉ filename # it has no file ending
+        filename *= ".png"
+    end
+    Makie.save(joinpath(path, filename), fig, args...; px_per_unit = 2, kwargs...)
 end
 
 # Using FileIO's load to make figures for black slides
