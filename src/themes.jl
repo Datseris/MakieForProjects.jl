@@ -182,13 +182,6 @@ function make_theme()
     return theme
 end
 
-function __init__()
-    theme = make_theme()
-    global COLORS = CyclicContainer(COLORSCHEMES[get(ENV, "COLORSCHEME", "JuliaDynamics")])
-    set_theme!(theme)
-    return
-end
-
 # Testing style (colorscheme)
 using Random
 
