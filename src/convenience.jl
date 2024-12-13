@@ -95,6 +95,7 @@ const subplotgrid = axesgrid
 """
     label_axes!(axs::Array{Axis};
         valign = :top, halign = :right, pad = 5,
+        transformation = x -> "("*string(x)*")",
         labels = range('a'; step = 1, length = length(axs)),
         add_box = false, boxkw = NamedTuple(), kw...
     )
