@@ -29,7 +29,7 @@ function lighten(c, f = 1.2)
 end
 
 """
-    fadecolor(c::ColorLike, N::Int, f = 0.5)
+    fadecolor(c::ColorLike, N::Int, fade = 0.5)
 
 Create a vector of `N` colors based on `c` but that "fade away" towards
 full transparency. The alpha channel (transparency) scales as `t^fade` with `t`
@@ -49,4 +49,15 @@ function fadecolor(c, N::Int, f = 0.5)
     x = to_color(c)
     x = [RGBAf(x.r, x.g, x.b, (i/N)^(fade)) for i in 1:N]
     return x
+end
+
+"""
+    fadelines!(ax, x, y; kw...)
+
+Same as [`fadecolor`](@ref) but also call `lines!` with the resulting color.
+"""
+function fadelines!(ax, x, y; fade = 0.5, color = :purple, kw...)
+    c = fadecolor(color, length(x), fade)
+    lines!(ax, x, y; linecap = :butt, joinstyle = :round, kw..., color = c)
+    return
 end

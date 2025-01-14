@@ -103,6 +103,7 @@ testcolorscheme("GreenMetal")
 lighten
 invert_luminance
 fadecolor
+fadelines!
 ```
 
 ## Convenience functions
