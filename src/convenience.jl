@@ -93,65 +93,54 @@ const subplotgrid = axesgrid
 
 
 """
-    label_axes!(axs::Array{Axis};
-        valign = :top, halign = :right, pad = 5,
-        transformation = x -> "("*string(x)*")",
+    label_axes!(axs::Iterable{Axis};
+        valign = :top, halign = :right, pad = 4,
+        transformation = x -> string(x),
         labels = range('a'; step = 1, length = length(axs)),
         add_box = false, boxkw = NamedTuple(), kw...
     )
 
 Add labels (like a,b,c,...) to all axes.
-Keywords customly adjust location, and `kw` are propagated to `Label`.
-If chosen, a box is added around the label with options `boxkw` propagated to `Box`.
+
+Keywords adjust location and padding and printing.
+All other keywords are propagated to either `Label` or [`textbox!`](@ref),
+depending on whether `add_box` is `true`.
 """
 function label_axes!(axs;
         labels = range('a'; step = 1, length = length(axs)),
-        transformation = x -> "("*string(x)*")",
-        valign = :top, halign = :right,
-        pad = 5, add_box = false, kwargs...,
+        transformation = identity,
+        pad = 4,  valign = :top, halign = :right,
+        add_box = false, kwargs...,
     )
 
     lbs = @. string(transformation(labels))
     # Create padding from alignment options
-    padding = [0,0,0,0]
+    padding = fill(2, 4)
     if halign == :right
         padding[2] = pad
     elseif halign == :left
         padding[1] = pad
     end
     if valign == :top
-        padding[3] = pad
+        padding[4] = pad÷2
     elseif valign == :bottom
-        padding[4] = pad
+        padding[3] = pad÷2
     end
-
+    padding = (padding...,)
+    extra = (; font = :bold, halign, valign,)
     for (i, ax) in enumerate(axs)
         @assert ax isa Axis
-        gc = ax.layoutobservables.gridcontent[]
-        x = gc.parent[gc.span.rows, gc.span.cols]
-        # Currently `Label` has no way of having a box around it
-        lab = Label(x, lbs[i];
-            tellwidth=false, tellheight=false,
-            valign, halign, padding, font = :bold, justification = :center,
-            kwargs...
-        )
-        if add_box
-            # but we can access the internals and get the box of the label,
-            # and then make an actual box around it
-            bx = Box(first(axs).parent; bbox = lab.layoutobservables.computedbbox, color = "transparent")
-            Makie.translate!(bx.blockscene, 0, 0, -1)
+        if !add_box
+            gc = ax.layoutobservables.gridcontent[]
+            x = gc.parent[gc.span.rows, gc.span.cols]
+            Label(x, lbs[i];
+                tellwidth=false, tellheight=false, justification = :center,
+                padding, extra..., kwargs...
+            )
+        else
+            padding = (pad, pad, pad÷2, pad÷2)
+            textbox!(ax, lbs[i]; textpadding = padding, extra..., kwargs...)
         end
-
-        # TODO: This is a much better option:
-        # gc = ax.layoutobservables.gridcontent[]
-        # pos = gc.parent[gc.span.rows, gc.span.cols]
-        # Textbox(pos;
-        #     placeholder = string(round(rmi; sigdigits = 2)),
-        #     textcolor_placeholder = :black, valign = :top, halign = :right,
-        #     tellwidth = false, tellheight=false, boxcolor = (:white, 0.75),
-        #     textpadding = (4, 4, 4, 4)
-        # )
-
     end
     return
 end
