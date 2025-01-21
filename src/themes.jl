@@ -51,6 +51,15 @@ COLORSCHEMES = Dict(
         "#2B33AD",
         "#2B2931",
     ],
+    "SandyBeach" => [
+        # from a student
+        "#F4A460", # Sandy brown
+        "#87CEEB", # Sky blue
+        "#0F7173", # caribbean current
+        "#59260B", # seal brown
+        "#17135A", # deep blue
+        "#52B380", # green
+    ]
 )
 
 # ENV["COLORSCHEME"]  = "JuliaDynamicsLight" # change this to test
