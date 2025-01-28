@@ -52,7 +52,7 @@ COLORSCHEMES = Dict(
         "#2B2931",
     ],
     "SandyBeach" => [
-        # from a student
+        # inspired by a student coursework
         "#F4A460", # Sandy brown
         "#87CEEB", # Sky blue
         "#0F7173", # caribbean current
