@@ -97,6 +97,10 @@ testcolorscheme("Flames")
 testcolorscheme("GreenMetal")
 ```
 
+```@example MAIN
+testcolorscheme("SandyBeach")
+```
+
 ## Color manipulation
 
 ```@docs
