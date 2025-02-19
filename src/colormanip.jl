@@ -56,8 +56,8 @@ end
 
 Same as [`fadecolor`](@ref) but also call `lines!` with the resulting color.
 """
-function fadelines!(ax, x, y; fade = 0.5, color = :purple, kw...)
-    c = fadecolor(color, length(x), fade)
-    lines!(ax, x, y; linecap = :butt, joinstyle = :round, kw..., color = c)
+function fadelines!(ax, args...; fade = 0.5, color = :black, kw...)
+    c = fadecolor(color, length(args[1]), fade)
+    lines!(ax, args...; linecap = :butt, joinstyle = :round, kw..., color = c)
     return
 end
