@@ -116,6 +116,7 @@ fadelines!
 
 ```@docs
 axesgrid
+axesgrid!
 ```
 
 ## Labelling functions

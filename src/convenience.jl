@@ -41,12 +41,24 @@ and return the figure and the `Matrix` of axis.
 - `xlims/ylims`: if given, they set the limits of x/y for **all** axes.
 - `kwargs...`: all further keywords are propagated to `Figure`.
 """
-function axesgrid(m, n;
+function axesgrid(args...; kwargs...)
+    fig = Makie.Figure(; kwargs...)
+    axs = axesgrid!(fig, args...; kwargs...)
+    return fig, axs
+end
+
+"""
+    axesgrid!(fig_loc, args...; kw...) -> axs
+
+Do exactly the same with `axesgrid(args...; kw...)`, but generate axes in
+a provided figure, or figure location, or grid layout from Makie.jl.
+E.g., `fig = Figure(); fig_loc = fig[1,1]`.
+"""
+function axesgrid!(fig, m, n;
         sharex = false, sharey = false, titles = nothing,
         xlabels = nothing, ylabels = nothing, title = nothing,
         xlims = nothing, ylims = nothing, kwargs...
     )
-    fig = Makie.Figure(; kwargs...)
     axs = Matrix{Axis}(undef, m, n)
     for i in 1:m
         for j in 1:n
@@ -87,10 +99,8 @@ function axesgrid(m, n;
         for ax in axs; ylims!(ax, ylims); end
     end
     !isnothing(title) && figuretitle!(fig, title)
-    return fig, axs
+    return axs
 end
-const subplotgrid = axesgrid
-
 
 """
     label_axes!(axs::Iterable{Axis};
