@@ -159,9 +159,9 @@ end
     textbox!(ax::Axis, text::AbstractString; kw...)
 
 Add a small textbox to `ax` containing the given `text`.
-By default, the textbox is placed at the top right corner with proper alignment,
-and it is slightly transparent. See the source code for the keywords you need
-to adjust for different placement or styling.
+This creates a `Makie.Textbox` at the same grid layout position as `ax`.
+By default, the textbox is placed at the top right corner with proper alignment.
+All keywords are propagated to `Textbox`.
 """
 function textbox!(ax, text; kw...)
     gc = ax.layoutobservables.gridcontent[]
