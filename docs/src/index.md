@@ -30,15 +30,16 @@ Makie.update_theme!(;
 )
 ```
 
-The second way is to do
+The second way is to use the `make_theme` function, e.g.:
 ```julia
 using MakieForProjects
-theme = MakieForProjects.make_theme(colorcycle, bgcolor, axiscolor)
+theme = make_theme(colorcycle, bgcolor, axiscolor)
 Makie.set_theme!(theme)
 ```
 
-And `make_theme` can also be called without arguments, in which case it
-uses the same environmental parameters.
+```@docs
+make_theme
+```
 
 ## Themes
 

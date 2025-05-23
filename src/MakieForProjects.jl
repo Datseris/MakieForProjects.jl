@@ -13,7 +13,7 @@ export COLORSCHEME, COLORS, MARKERS, LINESTYLES, DEFAULT_THEME
 export figuretitle!, axesgrid, axesgrid!, testcolorscheme
 export label_axes!, space_out_legend!, textbox!
 export lighten, invert_luminance, fadecolor, fadelines!
-export Makie, testcolortheem
+export Makie, testcolortheme, make_theme
 export negate_remove_bg, remove_bg
 
 include("themes.jl")
