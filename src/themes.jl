@@ -74,7 +74,7 @@ Base.size(c::CyclicContainer) = size(c.c)
 Base.length(c::CyclicContainer) = length(c.c)
 Base.iterate(c::CyclicContainer, state=1) = Base.iterate(c.c, state)
 Base.getindex(c::CyclicContainer, i::Int) = c.c[mod1(i, length(c))]
-Base.getindex(c::CyclicContainer, i::AbstractVector) = getindex.(Ref(c.c), i)
+Base.getindex(c::CyclicContainer, i::AbstractVector) = getindex.(Ref(c), i)
 
 function Base.getindex(c::CyclicContainer)
     c.n += 1
