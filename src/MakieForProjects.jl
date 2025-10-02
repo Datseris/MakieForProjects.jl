@@ -12,7 +12,7 @@ using Makie
 export COLORSCHEME, COLORS, MARKERS, LINESTYLES, DEFAULT_THEME
 export figuretitle!, axesgrid, axesgrid!, testcolorscheme
 export label_axes!, space_out_legend!, textbox!
-export lighten, invert_luminance, fadecolor, fadelines!
+export lighten, invert_luminance, fadecolor, fadelines!, streamlines!
 export Makie, testcolortheme, make_theme
 export negate_remove_bg, remove_bg
 
@@ -20,6 +20,7 @@ include("themes.jl")
 include("colormanip.jl")
 include("convenience.jl")
 include("drwatson.jl")
+include("plotting_functions.jl")
 
 function __init__()
     theme = make_theme()
@@ -28,4 +29,4 @@ function __init__()
     return
 end
 
-end # module MakieTheme
+end # module

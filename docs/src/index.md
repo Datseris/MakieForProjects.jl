@@ -108,7 +108,6 @@ testcolorscheme("SandyBeach")
 lighten
 invert_luminance
 fadecolor
-fadelines!
 ```
 
 ## Convenience functions
@@ -127,6 +126,13 @@ figuretitle!
 label_axes!
 space_out_legend!
 textbox!
+```
+
+## Plotting functions
+
+```@docs
+fadelines!
+streamlines!
 ```
 
 ## Image file manipulation

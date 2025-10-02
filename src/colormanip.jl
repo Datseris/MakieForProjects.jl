@@ -50,15 +50,3 @@ function fadecolor(c, N::Int, f = 0.5)
     x = [RGBAf(x.r, x.g, x.b, (i/N)^(fade)) for i in 1:N]
     return x
 end
-
-"""
-    fadelines!(ax, x, y; fade = 0.5, kw...)
-
-Same as [`fadecolor`](@ref) but also call `lines!` with the resulting color
-and the same instructions as `fadecolor`.
-"""
-function fadelines!(ax, args...; fade = 0.5, color = :black, kw...)
-    c = fadecolor(color, length(args[1]), fade)
-    lines!(ax, args...; linecap = :butt, joinstyle = :round, kw..., color = c)
-    return
-end

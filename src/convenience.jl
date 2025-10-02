@@ -105,7 +105,7 @@ end
 """
     label_axes!(axs::Iterable{Axis};
         valign = :top, halign = :right, pad = 4,
-        transformation = x -> string(x),
+        transformation = x -> string(x), transpose = false,
         labels = range('a'; step = 1, length = length(axs)),
         add_box = false, boxkw = NamedTuple(), kw...
     )
@@ -115,13 +115,31 @@ Add labels (like a,b,c,...) to all axes.
 Keywords adjust location and padding and printing.
 All other keywords are propagated to either `Label` or [`textbox!`](@ref),
 depending on whether `add_box` is `true`.
+
+Because you often want to call this function with the result of [`axesgrid`](@ref)
+and because you often want to label axes in the row-first order, rather
+than the Julia-native column-first enumeration, this function allows for the `transpose`
+keyword that transposes the axes container before proceeding with the labels.
+This only takes place if `ax isa Matrix{Axis}`.
 """
-function label_axes!(axs;
-        labels = range('a'; step = 1, length = length(axs)),
+function label_axes!(_axs;
+        labels = range('a'; step = 1, length = length(_axs)),
         transformation = identity,
         pad = 4,  valign = :top, halign = :right,
-        add_box = false, kwargs...,
+        add_box = false, transpose = false, kwargs...,
     )
+
+    if transpose && _axs isa Matrix{Axis}
+        r, c = size(_axs)
+        axs = Matrix{Axis}(undef, c, r)
+        for i in 1:r
+            for j in 1:c
+                axs[j, i]  = _axs[i, j]
+            end
+        end
+    else
+        axs = _axs
+    end
 
     lbs = @. string(transformation(labels))
     # Create padding from alignment options
