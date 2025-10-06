@@ -164,7 +164,7 @@ function make_theme(COLORSCHEME, BGCOLOR, AXISCOLOR)
         ),
         # This command makes the cycle of color and marker
         # co-vary at the same time in plots that use markers
-        ScatterLines = (cycle = cycle, markersize = 5),
+        ScatterLines = (cycle = cycle, markersize = 10, linewidth = 1),
         Scatter = (cycle = cycle, markersize = 15),
         Band = (cycle = :color,),
         Lines = (
