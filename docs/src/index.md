@@ -119,11 +119,12 @@ axesgrid
 axesgrid!
 ```
 
-## Labelling functions
+## Labelling & spacing functions
 
 ```@docs
 figuretitle!
 label_axes!
+align_labels!
 space_out_legend!
 textbox!
 ```

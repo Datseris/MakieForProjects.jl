@@ -213,3 +213,25 @@ function space_out_legend!(legend)
     legend.colgap[] += difference / (legend.nbanks[] - 1)
     return
 end
+
+
+"""
+    align_labels!(axs, coordinate; pad = 2)
+
+Align the x/y labels of the given axes by choosing which coordinate to align
+(`:x` or `:y`). Optionally decide an additional padding that will be added to all labels.
+"""
+function align_labels!(axs, coordinate; pad = 2)
+    if coordinate == :x
+        xspace = maximum(tight_xticklabel_spacing!, axs)
+        for ax in axs
+            ax.xticklabelspace = xspace + pad
+        end
+    elseif coordinate == :y
+        yspace = maximum(tight_yticklabel_spacing!, axs)
+        for ax in axs
+            ax.yticklabelspace = yspace + pad
+        end
+    end
+    return
+end

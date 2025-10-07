@@ -11,7 +11,7 @@ using Makie
 
 export COLORSCHEME, COLORS, MARKERS, LINESTYLES, DEFAULT_THEME
 export figuretitle!, axesgrid, axesgrid!, testcolorscheme
-export label_axes!, space_out_legend!, textbox!
+export label_axes!, align_labels!, space_out_legend!, textbox!
 export lighten, invert_luminance, fadecolor, fadelines!, streamlines!
 export Makie, testcolortheme, make_theme
 export negate_remove_bg, remove_bg
