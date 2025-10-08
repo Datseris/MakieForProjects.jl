@@ -120,7 +120,7 @@ function make_theme(COLORSCHEME, BGCOLOR, AXISCOLOR)
         # Sizes of figure and font
         Figure = (
             size = (1000, 600),
-            figure_padding = 20,
+            figure_padding = 5,
         ),
         fontsize = _FONTSIZE,
         Axis = (
