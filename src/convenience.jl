@@ -222,6 +222,7 @@ Align the x/y labels of the given axes by choosing which coordinate to align
 (`:x` or `:y`). Optionally decide an additional padding that will be added to all labels.
 """
 function align_labels!(axs, coordinate; pad = 2)
+    Makie.update_state_before_display!(fig)
     if coordinate == :x
         xspace = maximum(tight_xticklabel_spacing!, axs)
         for ax in axs
