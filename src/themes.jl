@@ -90,8 +90,8 @@ MARKERS = CyclicContainer([:circle, :dtriangle, :rect, :star5, :xcross, :diamond
 LINESTYLES = CyclicContainer([:solid, :dash, :dot, Linestyle([0, 3, 4, 5, 6]), Linestyle([0, 5, 6])])
 
 cycle = Cycle([:color, :marker], covary = true)
-_FONTSIZE = 20
-_LABELSIZE = 22
+_FONTSIZE = 18
+_LABELSIZE = 20
 
 """
     make_theme(colors, bgcolor, axiscolor)
