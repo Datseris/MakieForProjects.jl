@@ -2,9 +2,8 @@
     streamlines!(ax, x, y; kw...)
 
 A `lines!` plot that decorates the lines with triangles with same orientation as the local
-tangent to the line. This is a single-line version of a `streamplot`.
-All keywords are propagated to `lines!` with the exception of `markersize` that scales the
-triangle size.
+tangent to the line. It combines a `lines!` plot with a `scatter!` plot of oriented triangles.
+Keywords are propagated to both `lines!, scatter!` if they are shared, otherwise only to `lines!`.
 
 The additional keyword `idxs` denotes to which indices of the x-y curve to add directional
 triangles. It defaults to `[length(x)÷2, length(x)]`.
@@ -12,21 +11,39 @@ triangles. It defaults to `[length(x)÷2, length(x)]`.
 function streamlines!(ax, x, y; idxs = [length(x)÷2, length(x)], space = :data, color = Cycled(1), markersize = 15, kw...)
     x = collect(x)
     y = collect(y)
-    lines!(ax, x, y; color, space, kw...)
-    for index in idxs
+    objects = []
+    push!(objects, lines!(ax, x, y; color, space, kw...))
+    φs = map(idxs) do index
         dx = x[index] .- x[index-1]
         dy = y[index] .- y[index-1]
-        φ = atan(dy, dx)
-        scatter!(ax, x[index], y[index]; color, space, markersize, rotation = φ, marker = :rtriangle, )
+        atan(dy, dx)
     end
-    return
+    # TODO: @lift the indices on x/y it also works with observables
+    push!(objects, scatter!(ax, x[idxs], y[idxs]; color, space, markersize, rotation = φs, marker = :rtriangle, ))
+    return objects
 end
+
+function streamlines!(ax, xy;
+        idxs = [length(xy)÷2, length(xy)], space = :data, color = Cycled(1),
+        markersize = 15, translate = (0, 0, 99), kw...
+    )
+    objects = []
+    push!(objects, lines!(ax, xy; color, space, kw...))
+    # TODO: @lift the indices on x/y it also works with observables
+    φs = map(idxs) do index
+        dxy = xy[index] .- xy[index-1]
+        atan(dxy[2], dxy[1])
+    end
+    push!(objects, scatter!(ax, xy[idxs]; color, space, markersize, rotation = φs, marker = :rtriangle, ))
+    translate!.(objects, translate...)
+    return objects
+end
+
 
 """
     fadelines!(ax, x, y; fade = 0.5, kw...)
 
-Same as [`fadecolor`](@ref) but also call `lines!` with the resulting color
-and the same instructions as `fadecolor`.
+A `lines!` plot using [`fadecolor`](@ref) for color as well as the accompanying instructions.
 """
 function fadelines!(ax, args...; fade = 0.5, color = :black, kw...)
     c = fadecolor(color, length(args[1]), fade)
