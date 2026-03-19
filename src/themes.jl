@@ -84,10 +84,14 @@ end
 ########################################################################################
 # Set Makie theme
 ########################################################################################
-MARKERS = CyclicContainer([:circle, :dtriangle, :rect, :star5, :xcross, :diamond])
+# markers chosen so that marker side somewhat corresponds to marker number
+# while also being distinguishable (hence x cross instead of hexagon)
+MARKERS = CyclicContainer([:circle, :diamond, :dtriangle, :rect, :star5, :xcross])
 # Linestyles implement a better dash-dot than the original default (too much whitespace)
 # and a second dashed style with longer lines between dashes
-LINESTYLES = CyclicContainer([:solid, :dash, :dot, Linestyle([0, 3, 4, 5, 6]), Linestyle([0, 5, 6])])
+LINESTYLES = CyclicContainer(
+    [:solid, :dash, :dot, Linestyle(2*[0, 3, 4, 5, 6]), Linestyle(2*[0, 5, 6])]
+)
 
 cycle = Cycle([:color, :marker], covary = true)
 _FONTSIZE = 18
