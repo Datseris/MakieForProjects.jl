@@ -59,6 +59,14 @@ COLORSCHEMES = Dict(
         "#59260B", # seal brown
         "#17135A", # deep blue
         "#52B380", # green
+    ],
+    "Pinga" => [
+        "#E9738E",
+        "#C2CF49",
+        "#4682B4",
+        "#3BA178",
+        "#646194",
+        "#4F525D",
     ]
 )
 
