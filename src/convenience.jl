@@ -7,17 +7,17 @@ MakieText = Union{Symbol, <: AbstractString}
     figuretitle!(fig, title; kwargs...)
 
 Add a title to a `Figure`, that looks the same as the title of an `Axis`
-by using the same default font. `kwargs` are propagated to `Label`.
+by using the same default font. `kwargs` are propagated to `Label(...)`
+which is the returned.
 """
 function figuretitle!(fig, title;
         valign = :bottom, padding = (0, 0, 0, 0),
-        font = "TeX Gyre Heros Bold", # same font as Axis titles
+        font = :bold, # same font as Axis titles
         kwargs...,
     )
-    Label(fig[0, :], title;
+    return Label(fig[0, :], title;
         tellheight = true, tellwidth = false, fontsize = _LABELSIZE, valign, padding, font, kwargs...
     )
-    return
 end
 
 """
